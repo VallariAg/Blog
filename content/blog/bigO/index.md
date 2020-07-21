@@ -9,17 +9,20 @@ description: "Introduction to Big-O notation and time complexity."
 >
 > -Wikipedia
 
+
 When characterising algorithm's efficiency, we quantify the number of operations or steps that the algorithm will require.
 
 So, considering each step as a basic unit of computation, the execution time for an algorithm can be expressed as the number of steps required to solve the problem.
 
 Now, if were to calculate a factorial,
 
-```c++
-factorial = 1; //initial step
-for (int i = 0; i < n; i++) {
-    factorial *= i;  //step
-}
+Euler's formula is remarkable: $e^{i\pi} + 1 = 0$
+
+```python
+factorial = 1; #initial step
+for i in range(n):
+    factorial *= i;  #step
+
 ```
 
 It would take `n + 1` (` = initial step + n * step`) steps to calculate the factorial of a number `n`.

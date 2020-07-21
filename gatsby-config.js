@@ -3,7 +3,7 @@ module.exports = {
     title: `Stuff I learn`,
     author: {
       name: `Vallari`,
-      summary: `who lives in Delhi, learning new technology and making cute drawings.`,
+      summary: `, learning new technology and making cute art.`,
     },
     description: `Blogs written by Vallari`,
     siteUrl: `https://gatsby-starter-blog-demo.netlify.app/`,
@@ -30,11 +30,21 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          `gatsby-remark-mathjax`,
+
           {
             resolve: `gatsby-remark-images`,
             options: {
               maxWidth: 590,
             },
+          },
+          {
+            resolve: `gatsby-remark-highlight-code`,
+            options: {
+              theme: 'material',
+              terminal: 'carbon',
+              lineNumbers: true,
+            }
           },
           {
             resolve: `gatsby-remark-responsive-iframe`,
