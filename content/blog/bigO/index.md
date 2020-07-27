@@ -7,7 +7,7 @@ description: "Introduction to Big-O notation and time complexity."
 
 How do we compare between two algorithms?
 
-The first instinct would be to see which one is faster. So, we run two algorithms and see which one executes in lesser time. This won't be best judge because other factors like speed of computer, language, compiler, etc, comes in play. 
+The first instinct would be to see which one is faster. So, we run two algorithms and see which one executes in lesser time. This won't be the best judge because other factors like speed of computer, language, compiler, etc, come into play. 
 
 So, to compare we need a measurement of performance of an algorithm independent of these external factors.
 
@@ -18,28 +18,30 @@ Let's think of the running time in some other way.
 The *number of operations* that run when executing an algorithm is it's runtime.
 So, we calculate how many **operations** or **steps** an algorithm would take and the one with the lesser number of operations wins!
 
-We choose the algorithm with lesser operations because we proved that we are doing **unnecessary extra work** in the algorithm which takes more operations.
+We choose the algorithm with lesser operations because we proved that the algorithm (the one with more operations) is doing **unnecessary extra work** when the same task can be done in lesser operations. 
 
 
 ```python
 factorial = 1; #initial step
-for i in range(n):
+for i in range(n): #for-step
     factorial *= i;  #step
 
 ```
 
-It would take $n + 1$ steps/operations to calculate the factorial of a number $n$.
+It would take $2n + 1$ steps/operations to calculate the factorial of a number $n$. *How?*
 
-`initial step` + n $*$ `step` = $n + 1$
+1. `initial step`: Initializing `factorial` is 1 operation
+2. `step`: 1 operation running $n$ times
+3. `for-step`: Initializing `i` is 1 operation + $n - 1$ times incrementing it's value = $n$ operations
 
-This is how we calculate number of operations.
+which gives $1 + (n * 1) + n = (2n + 1)$ operations. 
 
 ### Let's consider how long an algorithm takes to run in terms of *the size of the input* and *growth with increase in input size*.
 
 #### 1. Size of the input: 
     
 
-When calculating factorial in above example, for $n$ input it takes $n + 1$ operations. For example, for $n = 10$, it takes 11 operations.  
+When calculating factorial in above example, for $n$ inputs it takes $2n + 1$ operations. For example, for $n = 10$, it takes 21 operations.  
 
 So, we think of the runtime of the algorithm as a **function of the size of it's input**.
 
@@ -67,6 +69,9 @@ It doesn't really matter what coefficient of $n^2$ terms is as long as for an eq
 
 ## Asymptotic notation 
 Also known as **Bachmann–Landau notation**, Asymptotic notations are the mathematical notations used to describe the running time of an algorithm when the input *tends* towards a particular value or a limiting value.
+
+Let's look at asymptotic notations for `factorial` example, where our runtime was $2n + 1$, so dropping the constant coefficients and the less significant terms, the significant part for our runtime would be $n$. 
+
  Some of it's family members are: 
 - Theta notation $\Theta$
 - Big-O notation $O$
@@ -286,7 +291,7 @@ One classic example is the [traveling salesman problem](https://en.wikipedia.org
 
 ### Amortized Analysis
 
-Vectors in C++ are dynamic arrays (like Lists in python), amd they are assign memory in blocks of contiguous locations.
+Vectors in C++ are dynamic arrays (like Lists in python), and they are assign memory in blocks of contiguous locations.
 When the allocated memory falls short, the vector copies the elements in a new memory block with a larger size and then adds the new element.
 
 If we look at the Big-O for pushing a new element, it would be $O(n)$ as with Big-O we consider the worst case, i.e.  copying the vector to a bigger memory block, right? But it's really $O(1)$ *amortized*. Let's see what this means.

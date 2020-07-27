@@ -9,5 +9,5 @@ I just started my second year of college, and I'm learning about different techn
 
 Currently working on my first Machine Learning project, as of July 2020.
 
-Checkout my other projects on [Github](github.com/vallariag)!
+Checkout my other projects on [Github](https://github.com/VallariAg)!
 
