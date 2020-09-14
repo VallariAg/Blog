@@ -15,13 +15,13 @@ It means that, in JavaScript, the code is complied and then executed right away.
 JavaScript engine compiles JavaScript to optimized machine code before execution. It is responsible for start-to-finish compilation and execution. It is compiler's job to parse and generate code for Engine to execute later. And it's Scope job to collect and maintain a lookup of all variables defined, and their rules of accessibility.
 
 
-Let's see how `var a = 2;` is compiled. Encountering `var a`, Compiler asks Scope about existance of a variable `a` in that particular Scope collection. Scope says it exists, compiler ignores `var a`. Scope says it doesn't exist, compiler creates a varible `a` in that scope collection. Compile produces code for Engine to execute later. Engine sees `a = 2` and asks Scope if `a` exists. Scope says yes, Engine assigns value to `a`. IF Scope said no, that no such variable was introduced by compiler, Engine asks Scope to look in it's nested loops.
+Let's see how `var a = 2;` is compiled. Encountering `var a`, Compiler asks Scope about existance of a variable `a` in that particular Scope collection. If Scope says it exists, compiler ignores `var a` (i.e. initialising a variable). Otherwise, if Scope says it doesn't exist, compiler creates a varible `a` in that scope collection. Then Compiler produces code for Engine to execute later. Engine sees `a = 2` and asks Scope if `a` exists. Scope says yes, Engine assigns value `2` to `a`. *If* Scope said no, that no such variable was introduced by compiler, Engine asks Scope to look in it's nested loops.
 
 So, there are two kinds of look-ups. One, that Compiler asks Scope to look/create a variable. Another, where Engine asks Scope to return value of variable.
 
-These are usually, on either side of `=`, the *assignment operator*. The right hand side (RHS) is usually the look-up for Engine, and left hand side (LHS) is usually the look-up for Compiler. For example `var a = b + c`, compiler asks for a RHS look-up and makes the variable `a` (if it existed then it ignores it). After compilation, the Engine asks for a LHS look-up, Scope finds values of `b` and `c`, Engine adds the values and then assigns value to `a`. 
+These are usually, on either side of `=`, the *assignment operator*. The right hand side (RHS) is usually the look-up for Engine to asking for variable's values, and left hand side (LHS) is usually the look-up for Compiler to create variables. For example `var a = b + c`, compiler asks for a RHS look-up and makes the variable `a` (if it existed then it ignores it). After compilation, the Engine asks for a LHS look-up, Scope finds values of `b` and `c`, Engine adds the values and then assigns value to `a`. 
 
-#### Looking in nested loops
+### Nested loops
 ```js
 var b = 2;
 function foo(c) {
@@ -30,9 +30,9 @@ function foo(c) {
 }
 foo(3);
 ``` 
-If Engine asks for value of `b` and `c` in line 3, Scope can't find a variable `b` in it's currect scope collection of function `foo` so it looks for it in it's parent scope (here that's global scope!) and keeps checking at nested scopes till it finds `b` or reaches the top level scope, the global scope.
+If Engine asks for value of `b` and `c` in line 3, Scope can't find a variable `b` in it's currect scope collection of function `foo` so it looks for it in it's enclosing scope (that's global scope, here!) and keeps checking at nested scopes till it finds `b` or reaches the top level scope, the global scope.
 
-###### Shadowing
+#### Shadowing
 
 *Scope lookups stops once it finds the first match*. So, if there was a variable `a` outside `foo()`, lookup will always return the first match, i.e. `a` defined inside `foo()`. Same identifier defined in multiple layer scope is called **shadowing**. So, inner identifier `a` shodows outter identifer `a`.
 ```js
@@ -41,16 +41,16 @@ function foo() {
     var a = 5;
 }
 ```
-*How to access shadowed variables?* Global variables are automatically a property of global object (*window* in browsers etc.) so we can access global variables as `window.a` that would otherwise be inaccessible because of being shadowed. Non-global shadowed variables cannot be accessed. 
+*How to access shadowed variables?*  Global variables are automatically a property of global object (*window* in browsers etc.) so we can access global variables as `window.a` that would otherwise be inaccessible because of being shadowed. Non-global shadowed variables cannot be accessed. 
 <!-- Compiler just helps Scope makes a schema for where the variables are defined.  -->
-#### Errors
+### Errors
 For `a = 2`, if there is no such variable definition before of `a` in all nested scopes, then compiler would spring a *ReferenceError*. But if Engine is looking for a variable `a` and doesn't find it in any of it's nested scope, then (if not in strict mode) a new variable of name `a` will be created in the *global scope* and is handed it to Engine. In strict mode, Engine would throw a *ReferenceError* as well.
 
 
-### Lexical Scope
+## Lexical Scope
 There are two predominant ways scopes works: *lexical scope*, and *dynamic scopes*. JavaScript employs lexical scope model.
 
-Lexing or tokenization is a process that takes a string of code and converts it into tokens with a *stateful rules deciding if each token is distant or part of another token*. So lexical scope is scope defined at lexing time.
+Lexing or tokenization is a process (first step of compilation) that takes a string of code and converts it into tokens with a *stateful rules deciding if each token is distant or part of another token*. So lexical scope is scope defined at lexing time.
 
 Lexical scope is *authored by us while writing* and thus are *set in stone* by the time lexer (tokenizer) processes your code.
 
@@ -63,9 +63,9 @@ Let’s explain how the lexical scope works with an example:
 
 
 #### Cheating Lexical Scope
-Even though they are *set in stone* as they are scopes in which you write code, lexical scope can be cheated! Cheated? Yeah, we can not define a variable during writing the code (author-time) and define it after lexer has passed by. You might ask, add a variable to scope after author-time? Is that possible? Yes, it is!
+Even though they are *set in stone* as they are scopes in which you write code, lexical scope can be cheated! Cheated? Yeah, we can not define a variable during writing the code (author-time) and define it after lexer has passed by. You might ask, add a variable to scope after author-time? Is that even possible? Yes, it is!
 
-There are two ways to cheat lexical scope, both of which are considered bad practices and should be avoided. Why? *Cheating lexical scope leads to poorer performance*. Now, let's look at these two ways:
+There are two ways to cheat lexical scope, both of which are considered bad practices and should be avoided. Why? *Cheating lexical scope leads to poorer performance* (we'll look at this later). Now, let's look at these two ways:
 1. `eval`
     > The eval() function evaluates JavaScript code represented as a string.
 
@@ -79,7 +79,7 @@ var b = 2;
 
 foo("var b = 3;", 1);
 ```
-So, at line 2, it will execute `var b = 3;`. Instead of authoring `b` in `foo` at author-time, it will dynamically modify the lexical scope environment. The Engine will not care if `b` was added after lexing, it will execute it, and print `1 3` on console, as dynamically added `b` will shadow the gobal `b`. 
+So, at line 2, `var b = 3;` will be executed. Instead of authoring `b` inside `foo` at author-time, it will dynamically modify the lexical scope environment. The Engine will not care if `b` was added after lexing, it will execute it, and print `1 3` on console, as dynamically added `b` will shadow the gobal `b`. 
 
 In strict mode, `eval()` has it's own scope, i.e. declarations inside `eval` do not modify the enclosing scope. So, the output of line 3 will be `1 2`. 
 
@@ -148,7 +148,7 @@ The engine performs a number of performance optimisation during compilation phas
 
 But with presence of `eval` or `with`, it canot know at lexing time what code `eval` has that modifies the scope or what new scope `with` will create, so it essentially assumes that most of optimisations it would make are pointless due to ambiguity in scopes so it doesn't perform the optimisation *at all*. Hence, making the execution slower. 
 
-### Function VS Block Scope
+## Function VS Block Scope
 
 JavaScipt has function-based scope. Each function has it's own scope.
 ```js
@@ -321,11 +321,98 @@ Introduced by ES6, `const` also creates block scoped varibles, but whose values 
 
 ## Hoisting
 
-## Scope Closure
+Let's look back to our JavaScript Engine. The engine compiles before it executes. Part of the compilation was to find and associate all declarations with their respective scopes (lexical scoping).
+
+So, looking back at `var a = 2;`, JavaScript thinks of this as two statements. First statement, the declaration, is processsed during compiling and the second statement, the assignment, is left *in place* for execution time.
+```js
+// var a = 2; is seen as
+var a;
+a = 2; 
+```
+Remembering declaration comes before execution, we can guess what the result of these snippets be:
+```js
+a = 2;
+var a = 2;
+console.log(a);
+```
+```js
+console.log(a);
+var a = 2;
+```
+The first snippet will output `2`. *How?* It will evalute `var a` (declaration during compiling) then `a = 2` *then* `console.log(a)`.
+
+Second snippet will output `undefined`. *How?* It will evaluate `var a` (declaration) then `console.log(a)` and then `a = 2`. See the assignment was *in place*, i.e. *after* logging it to console. 
+
+The best way to think of this is that variable and functions are *moved* from where they appear in the flow of the code to top of the block. This is known as **hoisting**.
+
+##### Functions
+
+```js
+foo();
+
+function foo(){
+    console.log(a); // undefined
+    var a = 2;
+}
+```
+During compiling `foo` function definition was hoisted to above function call `foo()` and so it's able to execute with no errors! (Also, inside the function you see `a` getting hoisted at top of it's block)
+
+Function declarations are hoisted, but function expressions are not.
+
+```js
+foo(); //TypeError 
+bar(); //ReferenceError
+
+var foo = function bar(){
+    // code
+}
+```
+Here, during compilation `var foo` will be evaluated then during execution first `foo();` will be executed which does not have a value, so far, hence the value of `foo` at this time is `undefined`. Hence, you see a `TypeError` rather than a `ReferenceError`. For `bar()`, it doesn't know `bar` exists so far because the RHS of `foo` hasn't been evaluated yet, so it spits out a `ReferenceError`.
+
+##### Functions First
+
+When both function and variable declarations are hoisted, functions are hoisted first then variables.
+```js
+foo(); // 1
+
+var foo;
+
+function foo() {
+    console.log(1);
+}
+
+foo = function() {
+    console.log(2)
+}
+``` 
+This is interpreted by Engine as:
+```js
+function foo() {
+    console.log(1);
+}
+// var foo is ignored
+foo();
+
+foo = function() {
+    console.log(2);
+}
+```
+`var foo` was dupliacte definition so it was ignored, *even though it came before the function*, because function declarations are hoisted before normal variables.
+
+What if there were two function definition (of same name) hoisted? If there had been a duplicate function definition, it would have overridden the previous function definition.
+
+<!-- ## Scope Closure -->
+<!-- what are closures? how to see them  -->
+<!-- block scoping -->
+
+<!-- ### Modules -->
+
+<!-- modern modules -->
+<!-- future modules -->
 
 
 ## References
 
 - [You don't know JS: Scope & Closures](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/scope%20&%20closures/README.md#you-dont-know-js-scope--closures)
 - [Javascript Scope Chain and Execution Context simplified](https://medium.com/koderlabs/javascript-scope-chain-and-execution-context-simplified-ffb54fc6ad02)
-- https://medium.com/@osmanakar_65575/javascript-lexical-and-dynamic-scoping-72c17e4476dd
+- [Lexical and dynamic scoping](https://medium.com/@osmanakar_65575/javascript-lexical-and-dynamic-scoping-72c17e4476dd)
