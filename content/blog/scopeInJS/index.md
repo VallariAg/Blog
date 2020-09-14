@@ -163,16 +163,97 @@ function foo(a) {
 There exists global scope with `foo()` identifier. 
 Scope of `foo()` includes identifiers `a`, `b`, `c`, and `bar`. Also, `bar` has it's own scope. All these identifiers (`a`, `b`, `c`) are accessible inside `foo()` and inside `bar()` (assuming no shadow identifier is declared inside `bar`).
 
+Let's see functions like taking a snippet of code and wrapping it into a bubble (viz function).
 
-
-Why use functions? Discussing with scopes in mind with functions you can "hide" variables and functions by enclosing them in a scope of a function. Why do we do that? 
+Why use functions? Discussing with scopes in mind, with functions you can "hide" variables and functions by enclosing them in a scope of a function. Why do we do that? 
 - Because of a software design principle called *Principle of Least Privilege* (or Least Authority or Least Exposure), which says that you should expose oly what is minimally necessary and "hide"  everything else (i.e. abstraction).
-- Collision Avoidance: To avoid unintended collision between two different identifers with same name, made for different usages.
+- Collision Avoidance: To avoid unintended collision between two different identifers with same name, made for different usages. Other ways to avoid collision are:
+    
+    - Global namespaces:  Muliple libraries can have identifers that collide with each other so such libraies, typically will create a single unique variable declaration (like an object) and use it as *namespace* for that libary, where all functionalities are properites of that object.
+        ```js
+        var libary1 = {
+            name: "libary1",
+            doSomething: function () { ... },
+            doSomethingElse: function () { ... }
+        }
+        ```
+    - Module management: Using modern *module* approach, using dependancy managers. With these tools, no library ever adds identifier to global scope but instead have their indentifiers be explicitly imported into a specific scope.
+
+#### Functions as Scopes 
+
+```js
+var b = 3;
+function foo() {
+    var b = 2;
+    console.log(b); //2
+} 
+foo();
+console.log(b); //3
+```
+
+Here, `foo()` pollutes the enclosing scope (here it's global scope)
+
+```js
+var b = 3;
+(function foo() {
+    var b = 2;
+    console.log(b); //2
+})();
+console.log(b); //3
+```
+Here, enclosing function in () makes it expression. `function foo() {..}` is a *function declaration*, while `(function foo() {..})` is a *function expression*, and adding another `()` after `(function)` executes it. These functions are called **IIFE (Immediately Invoked function expression)**  
+
+In first code snippet, `foo` is bound in enclosing scope (here global), while in second code snippet `foo` is not bound to enclosing scope but *only* bound to inside it's own function. 
+
+Hence, making `foo` a function expressions doesn't pollute the enclosing scope!
+
+Another application of IIFE can be that default `undefined` identifier can have it's value incorrectlly overwritten, so by naming a parameter undefined and not passing any value for that argument, we can guarantee that `undefined` is `undefined`.
+
+```js
+undefined = true;
+
+(function foo(undefined){
+    var a;
+    if (a === undefined) {
+        console.log("undefined is safe here!");
+    }
+})();
+```
+Another variant of IIFE would be to declare the function definition in IIFE parameter and pass it as an argument to invoke.
+```js
+var a = 2;
+
+(function foo(def){
+    def(window)
+})(function def(global){
+    var a = 3;
+    console.log(a); //3
+    console.log(global.a); //2
+})
+```
+TODO: named functions > anonymous functions
+#### Blocks as scope
+A block is a code that's wrapped in brackets `{ .. }`.
+
+1. var
+2. let
+```js
+var foo = true;
+
+if(foo) {
+    let bar = foo * 2;
+    bar = something(bar);
+    console.log(bar); 
+}
+
+console.log(bar); //ReferenceError
+```
+`let` allows a way to explicitly define  blocks.
 
 
+3. const
 
-
-
+catch
 
 ## Hoisting
 
