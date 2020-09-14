@@ -233,10 +233,29 @@ var a = 2;
 ```
 TODO: named functions > anonymous functions
 #### Blocks as scope
-A block is a code that's wrapped in brackets `{ .. }`.
+A block is a snippet of code that's usually wrapped in brackets `{ .. }`.
+
+Block scope is a tool to extend the *Principle of Least Privilege* from hiding information in functions to hiding information in blocks of code.
+It's also helpful that we don't have to *check* accidental reuse of a variable outside it's intended scope.
+
 
 1. var
+
+A common example of block scope is a `for` loop.
+```js
+for (var i = 0; i < 10; i++){
+    console.log(i)
+}
+console.log(i) //10
+```
+We would want `i` to only exist in the `for` block (as it's only used there) so it doesn't pollute the enclosing scope.
+
+However, `var` always belongs to the enclosing scope, so this `for` loop is essentially fake block-scoping.
+
 2. let
+
+ES6 introduced `let` so we can actually bind varibles in block scope instead of faking it like `var` does.
+
 ```js
 var foo = true;
 
@@ -249,11 +268,56 @@ if(foo) {
 console.log(bar); //ReferenceError
 ```
 `let` allows a way to explicitly define  blocks.
+The identifers exists only in it's scope, i.e. their code block.
 
+Here, not only `let` binds `i` to for loop body but in fact it *rebinds* it to each iteration of the loop, after reassigning it's value from previous loop iteration. It's equivalent to this:
+
+```js
+{
+    let j;
+    for(j = 0; j<10; j++){
+        let i = j; //re-bound at each iteration!
+        console.log(i);
+    }
+}
+```
+
+Also, `let` will not hoist the variable to entire scope of the block they appear in. They don't observably "exist" until the declaration statement.
+```js
+{
+    console.log(bar); //ReferenceError
+    let bar = 2;
+}
+```
 
 3. const
 
-catch
+Introduced by ES6, `const` also creates block scoped varibles, but whose values are fixed. ANy attempt to change it's avlue at a later time will result in an error.
+```js
+{
+    const a = 2;
+    var b = 3;
+    
+    b = 30; 
+    a = 20; //error 
+}
+```
+
+- catch:
+
+    The variable declaration in `catch` of a `try/catch` is block scoped to `catch` block.
+    ```js
+    try {
+        // something that failed
+    } catch (err) {
+        console.log(err); // works!
+    }
+
+    console.log(err); // ReferenceError: 'err' not found
+    ```
+
+<!-- Another reason to use block scope variables is *garbage collection*. As, we'll later discuss Closures,  TODO -->
+
 
 ## Hoisting
 
