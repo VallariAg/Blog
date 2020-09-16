@@ -231,7 +231,20 @@ var a = 2;
     console.log(global.a); //2
 })
 ```
-TODO: named functions > anonymous functions
+
+**Named Functions > Anonymous Functions**
+
+Anonymous functions are when `function()` has no identifier attached to it. These are most commonly used with `setTimeout()` like:
+```js
+setTimeout(function () {
+    console.log("I waited 1 second!")
+}, 1000);
+```
+It is always better to use named functions because:
+-  There is no useful name to display on stack traces, which makes debugging difficult.
+-  For a function to refer to itself (i.e. for recursion) we would have to use *deprecated* `arguments.callee` reference.
+-  Named functions are more readable as a descriptive name helps self-document the code
+
 #### Blocks as scope
 A block is a snippet of code that's usually wrapped in brackets `{ .. }`.
 
@@ -401,7 +414,45 @@ foo = function() {
 
 What if there were two function definition (of same name) hoisted? If there had been a duplicate function definition, it would have overridden the previous function definition.
 
-<!-- ## Scope Closure -->
+## Scope Closure
+
+> Closure is when a function is able to remember and access its lexical scope even when that function is executing outside its lexical scope.
+
+```js
+function foo() {
+    var a = 2;
+
+    function bar() {
+        console.log(a);
+    }
+    return bar;
+} 
+
+var baz = foo();
+
+baz(); // 2 HOW?
+```
+*`bar()` has lexical cope access to inner scope of `foo()`*. When, we execute `foo()`, we assign the value it returned (inner function `bar`) to variable `baz`. Now `baz` is just another reference to inner function `bar` so when we call `baz();` it invokes `bar`.
+
+After `foo()` is executed, engine employs a garbage collector to free up memory and since after `foo()` executed it would throw away entire inner scope of `foo`. This would happend normally if it wasn't for closure.
+But `bar` still has reference to the scope of `foo` (as it printed 2 instead of `RefernenceError`), and that referernce is called closure.
+
+When function is being invoked well outside of it's author time lexical scope, closure lets the function continue access to the lexical scope it was defined in author-time. 
+
+Any of various ways functions can be passed around as values, and invoked in other location, is exercising/observing closure.
+
+Explained simply, whenever we *transport* an inner function outside of its lexical scope, it will maintain a scope reference to where it was originally declared, and whereever we execute him, that closure will be exercised.
+
+Let's look at some real exmples:
+```js
+function wait(msg) {
+    setTimeout(function timer(){
+        console.log(msg);
+    }, 1000);
+}
+
+wait("Hi");
+```
 <!-- what are closures? how to see them  -->
 <!-- block scoping -->
 
