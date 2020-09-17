@@ -15,7 +15,7 @@ It means that, in JavaScript, the code is complied and then executed right away.
 JavaScript engine compiles JavaScript to optimized machine code before execution. It is responsible for start-to-finish compilation and execution. It is compiler's job to parse and generate code for Engine to execute later. And it's Scope job to collect and maintain a lookup of all variables defined, and their rules of accessibility.
 
 
-Let's see how `var a = 2;` is compiled. Encountering `var a`, Compiler asks Scope about existance of a variable `a` in that particular Scope collection. If Scope says it exists, compiler ignores `var a` (i.e. initialising a variable). Otherwise, if Scope says it doesn't exist, compiler creates a varible `a` in that scope collection. Then Compiler produces code for Engine to execute later. Engine sees `a = 2` and asks Scope if `a` exists. Scope says yes, Engine assigns value `2` to `a`. *If* Scope said no, that no such variable was introduced by compiler, Engine asks Scope to look in it's nested loops.
+Let's see how `var a = 2;` is compiled. Encountering `var a`, Compiler asks Scope about existence of a variable `a` in that particular Scope collection. If Scope says it exists, the compiler ignores `var a` (i.e. initializing a variable). Otherwise, if Scope says it doesn't exist, the compiler creates a variable `a` in that scope collection. Then Compiler produces code for Engine to execute later. Engine sees `a = 2` and asks Scope if `a` exists. Scope says yes, Engine assigns value `2` to `a`. If* Scope said no, that no such variable was introduced by compiler, Engine asks Scope to look in its nested loops.
 
 So, there are two kinds of look-ups. One, that Compiler asks Scope to look/create a variable. Another, where Engine asks Scope to return value of variable.
 
@@ -34,7 +34,7 @@ If Engine asks for value of `b` and `c` in line 3, Scope can't find a variable `
 
 #### Shadowing
 
-*Scope lookups stops once it finds the first match*. So, if there was a variable `a` outside `foo()`, lookup will always return the first match, i.e. `a` defined inside `foo()`. Same identifier defined in multiple layer scope is called **shadowing**. So, inner identifier `a` shodows outter identifer `a`.
+*Scope lookups stops once it finds the first match*. So, if there was a variable `a` outside `foo()`, lookup will always return the first match, i.e. `a` defined inside `foo()`. Same identifier defined in multiple layer scope is called **shadowing**. So, inner identifier `a` shodows outer identifer `a`.
 ```js
 var a = 2;
 function foo() {
@@ -49,7 +49,7 @@ For `a = 2`, if there is no such variable definition before of `a` in all nested
 
 ## Lexical Scope
 
-Lexing or tokenization is a process (first step of compilation) that takes a string of code and converts it into tokens with a *stateful rules deciding if each token is distant or part of another token*. So lexical scope is scope defined at lexing time (which depends on how you authored the code).
+Lexing or tokenization is a process (first step of compilation) that takes a string of code and converts it into tokens with *stateful rules deciding if each token is distant or part of another token*. So lexical scope is scope defined at lexing time (which depends on how you authored the code).
 
 Lexical scope is *authored by us while writing* and thus are *set in stone* by the time lexer (tokenizer) processes your code.
 
@@ -86,7 +86,7 @@ var b = 2;
 
 foo("var b = 3;", 1);
 ```
-So, at line 2, `var b = 3;` will be executed. Instead of authoring `b` inside `foo` at author-time, it will dynamically modify the lexical scope environment. The Engine will not care if `b` was added after lexing, it will execute it, and print `1 3` on console, as dynamically added `b` will shadow the gobal `b`. 
+So, at line 2, `var b = 3;` will be executed. Instead of authoring `b` inside `foo` at author-time, it will dynamically modify the lexical scope environment. The Engine will not care if `b` was added after lexing, it will execute it, and print `1 3` on console, as dynamically added `b` will shadow the global `b`. 
 
 In strict mode, `eval()` has it's own scope, i.e. declarations inside `eval` do not modify the enclosing scope. So, the output of line 3 will be `1 2`. 
 
@@ -94,7 +94,7 @@ In strict mode, `eval()` has it's own scope, i.e. declarations inside `eval` do 
  > The with statement extends the scope chain for a statement.
 `with` is explained as multiple property references against an object *without* repeating the object reference itself each time.
 
-`with` is not allowed in scrict-mode.
+`with` is not allowed in strict-mode.
 ```js
 var obj = {
     a: 1,
@@ -140,24 +140,24 @@ console.log(o2.a); //undefined
 console.log(a); // 2 -- Leaked global!
 ```
 When we pass `o2`, which does not porssess property `a`, no such property is created in `with` and `o2.a` remains undefined.
-Also, a golabl variable `a` is created by the `a = 2` assignment.
+Also, a global variable `a` is created by the `a = 2` assignment.
 
-The `with` statement takes an object, and treats that object as a wholly seperate lexical scope. Thus, object's properties are lexical defined in that scope. A normal var declaration inside that `with` block will be scoped to it's containing function scope.
+The `with` statement takes an object and treats that object as a wholly separate lexical scope. Thus, the object's properties are lexically defined in that scope. A normal var declaration inside that `with` block will be scoped to it's containing function scope.
 
-So, the scope declared by `with` statement to `o1` was `o1` scope, and it accessed it's property `o1.a`. But when we used  `o2` as a scope, it has no property `a` defined in that scope so LHS identifier lookup occured (remember how it creates a new variable at global scope when the variable is not found in all it's nested scopes, in non-strict mode).
+So, the scope declared by `with` statement to `o1` was `o1` scope, and it accessed it's property `o1.a`. But when we used  `o2` as a scope, it has no property `a` defined in that scope so LHS identifier lookup occurred (remember how it creates a new variable at global scope when the variable is not found in all it's nested scopes, in non-strict mode).
 
-`eval()` modified the lexical scope, but `with` creates a whole new lexicals scope from the object you pass to it.
+`eval()` modified the lexical scope, but `with` creates a whole new lexical scope from the object you pass to it.
 
 
 ##### Performace
 
-The engine performs a number of performance optimisation during compilation phase. Some of which boils down to, analysing the code as it lexes and pre-determine where all variables and function declarations are, so that it takes less effort to resolve identifiers during execution.
+The engine performs a number of performance optimization during the compilation phase. Some of which boils down to, analyzing the code as it lexes and pre-determine where all variables and function declarations are so that it takes less effort to resolve identifiers during execution.
 
-But with presence of `eval` or `with`, it canot know at lexing time what code `eval` has that modifies the scope or what new scope `with` will create, so it essentially assumes that most of optimisations it would make are pointless due to ambiguity in scopes so it doesn't perform the optimisation *at all*. Hence, making the execution slower. 
+But with the presence of `eval` or `with`, it can't know at lexing time what code `eval` has that modifies the scope or what new scope `with` will create, so it essentially assumes that most of the optimisations it would make are pointless due to ambiguity in scopes so it doesn't perform the optimization *at all**. Hence, making the execution slower.
 
 ## Function VS Block Scope
 
-JavaScipt has function-based scope. Each function has it's own scope.
+JavaScript has function-based scope. Each function has it's own scope.
 ```js
 function foo(a) {
     var b;
@@ -173,10 +173,10 @@ Scope of `foo()` includes identifiers `a`, `b`, `c`, and `bar`. Also, `bar` has 
 Let's see functions like taking a snippet of code and wrapping it into a bubble (viz function).
 
 Why use functions? Discussing with scopes in mind, with functions you can "hide" variables and functions by enclosing them in a scope of a function. Why do we do that? 
-- Because of a software design principle called *Principle of Least Privilege* (or Least Authority or Least Exposure), which says that you should expose oly what is minimally necessary and "hide"  everything else (i.e. abstraction).
-- Collision Avoidance: To avoid unintended collision between two different identifers with same name, made for different usages. Other ways to avoid collision are:
+- Because of a software design principle called *Principle of Least Privilege* (or Least Authority or Least Exposure), which says that you should expose only what is minimally necessary and "hide"  everything else (i.e. abstraction).
+- Collision Avoidance: To avoid unintended collision between two different identifiers with same name, made for different usages. Other ways to avoid collision are:
     
-    - Global namespaces:  Muliple libraries can have identifers that collide with each other so such libraies, typically will create a single unique variable declaration (like an object) and use it as *namespace* for that libary, where all functionalities are properites of that object.
+    - Global namespaces:  Multiple libraries can have identifiers that collide with each other so such libraries, typically, will create a single unique variable declaration (like an object) and use it as *namespace* for that library, where all functionalities are properties of that object.
         ```js
         var libary1 = {
             name: "libary1",
@@ -184,7 +184,7 @@ Why use functions? Discussing with scopes in mind, with functions you can "hide"
             doSomethingElse: function () { ... }
         }
         ```
-    - Module management: Using modern *module* approach, using dependancy managers. With these tools, no library ever adds identifier to global scope but instead have their indentifiers be explicitly imported into a specific scope.
+    - Module management: Using modern *module* approach, using dependency managers. With these tools, no library ever adds identifier to global scope but instead have their identifiers be explicitly imported into a specific scope.
 
 #### Functions as Scopes 
 
@@ -210,11 +210,11 @@ console.log(b); //3
 ```
 Here, enclosing function in () makes it expression. `function foo() {..}` is a *function declaration*, while `(function foo() {..})` is a *function expression*, and adding another `()` after `(function)` executes it. These functions are called **IIFE (Immediately Invoked function expression)**  
 
-In first code snippet, `foo` is bound in enclosing scope (here global), while in second code snippet `foo` is not bound to enclosing scope but *only* bound to inside it's own function. 
+In the first code snippet, `foo` is bound in enclosing scope (here global), while in the second code snippet `foo` is not bound to enclosing scope but *only* bound to inside its own function. 
 
 Hence, making `foo` a function expressions doesn't pollute the enclosing scope!
 
-Another application of IIFE can be that default `undefined` identifier can have it's value incorrectlly overwritten, so by naming a parameter undefined and not passing any value for that argument, we can guarantee that `undefined` is `undefined`.
+Another application of IIFE can be that default `undefined` identifier can have it's value incorrectly overwritten, so by naming a parameter undefined and not passing any value for that argument, we can guarantee that `undefined` is `undefined`.
 
 ```js
 undefined = true;
@@ -274,7 +274,7 @@ However, `var` always belongs to the enclosing scope, so this `for` loop is esse
 
 2. let
 
-ES6 introduced `let` so we can actually bind varibles in block scope instead of faking it like `var` does.
+ES6 introduced `let` so we can actually bind variables in block scope instead of faking it as `var` does.
 
 ```js
 var foo = true;
@@ -288,12 +288,12 @@ if(foo) {
 console.log(bar); //ReferenceError
 ```
 `let` allows a way to explicitly define  blocks.
-The identifers exists only in it's scope, i.e. their code block.
+The identifiers exists only in it's scope, i.e. their code block.
 
 
 ##### `let` rebinds variables in each iteration
 
-Here, not only `let` binds `i` to for loop body but in fact it *rebinds* it to each iteration of the loop, after reassigning it's value from previous loop iteration. It's equivalent to this:
+Here, not only `let` binds `i` to for loop body but in fact, it *rebinds* it to each iteration of the loop, after reassigning its value from previous loop iteration. It's equivalent to this:
 
 ```js
 {
@@ -315,7 +315,7 @@ Also, `let` will not hoist the variable to entire scope of the block they appear
 
 3. const
 
-Introduced by ES6, `const` also creates block scoped varibles, but whose values are fixed. ANy attempt to change it's avlue at a later time will result in an error.
+Introduced by ES6, `const` also creates block scoped variables, but whose values are fixed. Any attempt to change it's value at a later time will result in an error.
 ```js
 {
     const a = 2;
@@ -346,7 +346,7 @@ Introduced by ES6, `const` also creates block scoped varibles, but whose values 
 
 Let's look back to our JavaScript Engine. The engine compiles before it executes. Part of the compilation was to find and associate all declarations with their respective scopes (lexical scoping).
 
-So, looking back at `var a = 2;`, JavaScript thinks of this as two statements. First statement, the declaration, is processsed during compiling and the second statement, the assignment, is left *in place* for execution time.
+So, looking back at `var a = 2;`, JavaScript thinks of this as two statements. First statement, the declaration, is processed during compiling and the second statement, the assignment, is left *in place* for execution time.
 ```js
 // var a = 2; is seen as
 var a;
@@ -362,13 +362,13 @@ console.log(a);
 console.log(a);
 var a = 2;
 ```
-The first snippet will output `2`. *How?* It will evalute `var a` (declaration during compiling) then `a = 2` *then* `console.log(a)`.
+The first snippet will output `2`. *How?* It will evaluate `var a` (declaration during compiling) then `a = 2` *then* `console.log(a)`.
 
 Second snippet will output `undefined`. *How?* It will evaluate `var a` (declaration) then `console.log(a)` and then `a = 2`. See the assignment was *in place*, i.e. *after* logging it to console. 
 
 The best way to think of this is that variable and functions are *moved* from where they appear in the flow of the code to top of the block. This is known as **hoisting**.
 
-##### Functions
+#### Functions
 
 ```js
 foo();
@@ -392,7 +392,7 @@ var foo = function bar(){
 ```
 Here, during compilation `var foo` will be evaluated then during execution first `foo();` will be executed which does not have a value, so far, hence the value of `foo` at this time is `undefined`. Hence, you see a `TypeError` rather than a `ReferenceError`. For `bar()`, it doesn't know `bar` exists so far because the RHS of `foo` hasn't been evaluated yet, so it spits out a `ReferenceError`.
 
-##### Functions First
+#### Functions First
 
 When both function and variable declarations are hoisted, functions are hoisted first then variables.
 ```js
@@ -420,7 +420,7 @@ foo = function() {
     console.log(2);
 }
 ```
-`var foo` was dupliacte definition so it was ignored, *even though it came before the function*, because function declarations are hoisted before normal variables.
+`var foo` was duplicate definition so it was ignored, *even though it came before the function* because function declarations are hoisted before normal variables.
 
 What if there were two function definition (of same name) hoisted? If there had been a duplicate function definition, it would have overridden the previous function definition.
 
@@ -442,17 +442,16 @@ var baz = foo();
 
 baz(); // 2 HOW?
 ```
-*`bar()` has lexical cope access to inner scope of `foo()`*. When, we execute `foo()`, we assign the value it returned (inner function `bar`) to variable `baz`. Now `baz` is just another reference to inner function `bar` so when we call `baz();` it invokes `bar`.
+*`bar()` has lexical cope access to inner scope of `foo()`*. When, we execute `foo()`, we assign the value it returned (inner function `bar`) to variable `baz`. Now, `baz` is just another reference to inner function `bar` so when we call `baz();` it invokes `bar`.
 
-After `foo()` is executed, engine employs a garbage collector to free up memory and since after `foo()` executed it would throw away entire inner scope of `foo`. This would happend normally if it wasn't for closure.
-But `bar` still has reference to the scope of `foo` (as it printed 2 instead of `RefernenceError`), and that referernce is called closure.
+After `foo()` is executed, engine employs a garbage collector to free up memory and since after `foo()` executed it would throw away entire inner scope of `foo`. This would happend normally if it wasn't for closure. But `bar` still has reference to the scope of `foo` (as it printed 2 instead of `RefernenceError`), and that reference is called closure.
 
 When function is being invoked well outside of it's author time lexical scope, closure lets the function continue access to the lexical scope it was defined in author-time. 
 
 *Wherever and whenever* functions are passed around as values, and invoked in other location, is exercising/observing closure. Be it timers, event handlers, or any asynchronous task, when you pass in a *callback function*, closures are involved.
 
 
-Explained simply, whenever we *transport* an inner function outside of its lexical scope, it will maintain a scope reference to where it was originally declared, and whereever we execute him, that closure will be exercised.
+Explained simply, whenever we *transport* an inner function outside of its lexical scope, it will maintain a scope reference to where it was originally declared, and wherever we execute him, that closure will be exercised.
 
 Let's look at a `setTimeout` example:
 ```js
@@ -466,7 +465,7 @@ wait("Hi");
 ```
 1000ms after executing `wait("hi")`, the inner scope of `wait` would *otherwise* be long gone but `timer` has a scope closure over `wait` keeping and using reference of variable `msg`.
 
-#### Does IIFE use closure?
+##### Does IIFE use closure?
 
 ```js
 var a = 2;
@@ -487,7 +486,7 @@ for (var i = 1; i <= 5; i++){
 ```
 This code outputs `6` five times. *How?* The loop stops when `i <= 5`, which will be first true when `i = 6`. So, all `timers` run after the completion of the loop (even `setTimeout(.., 0)`).
 
-Why *didn't* each setTimeout captures it's own copy of `i` (making result `1 2 3 4 5`)? Though each `setTimeout` is defined seperately in each loop iteration, they are closed over the same shared scope, which has only one `i`. Think of it's equalent using `setTimeout` *without loop* and incrementing a variable 5 times.
+Why *didn't* each setTimeout captures it's own copy of `i` (making result `1 2 3 4 5`)? Though each `setTimeout` is defined separately in each loop iteration, they are closed over the same shared scope, which has only one `i`. Think of its equivalent using `setTimeout` *without loop* and incrementing a variable 5 times.
 
 Let's understand this more by changing the loop to print `1 2 3 4 5`.
 
@@ -551,7 +550,7 @@ Stating simply, there are 2 requirements for the module pattern to be exercised:
 
 (Cool tip: Inside the enclosing module function, you can name the returning object `let obj = { func: func };  return obj;` so you can change the returning functions dynamically)
 
-ES6 treats a file as a seperate module, and *must* be defined in seperate files.
+ES6 treats a file as a separate module.
 
 ```js
 // bar.js
@@ -571,6 +570,7 @@ function awesome() {
 ```
  The contents inside a module file are treated as if enclosed in a scope closure, just like function-closure modules we just saw.
 
+This article was written while reading "You don't know JS: Scope & Closures". To get a better understanding of the topics discussed with more examples, I suggest to read the book.
 ## References
 
 - [You don't know JS: Scope & Closures](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/scope%20&%20closures/README.md#you-dont-know-js-scope--closures)
