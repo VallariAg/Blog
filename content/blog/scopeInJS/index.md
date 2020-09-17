@@ -1,7 +1,7 @@
 ---
 title: Scope and Closures in JavaScript
 date: "2020-09-05T22:12:03.284Z"
-description: "Scopes in JavaScript"
+description: "Learn a bit about Javascript engine, lexical scope, hoisting and closures."
 ---
 
 ## Scope

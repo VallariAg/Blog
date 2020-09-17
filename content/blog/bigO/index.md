@@ -23,7 +23,7 @@ We choose the algorithm with lesser operations because we proved that the algori
 
 ```python
 factorial = 1; #initial step
-for i in range(n): #for-step
+for i in range(1, n + 1): #for-step
     factorial *= i;  #step
 
 ```
@@ -34,7 +34,8 @@ It would take $2n + 1$ steps/operations to calculate the factorial of a number $
 2. `step`: 1 operation running $n$ times
 3. `for-step`: Initializing `i` is 1 operation + $n - 1$ times incrementing it's value = $n$ operations
 
-which gives $1 + (n * 1) + n = (2n + 1)$ operations. 
+
+Which gives $1 + (n * 1) + n = (2n + 1)$ operations. 
 
 ### Let's consider how long an algorithm takes to run in terms of *the size of the input* and *growth with increase in input size*.
 
@@ -56,7 +57,14 @@ We look for the **order of growth of it's runtime**.
 
 Example, runtime on input size $n$ takes $5n^2 + 100n + 300$ operations.
 
-For input size $n = 10^{20}$, runtime = $5 * 10^{40} + 10^{22} + 300$
+For input size $n = 10$, runtime = $500 + 1000 + 300$
+
+For input size $n = 10^{2}$, runtime = $5 * 10^{4} + 10^{4} + 300$
+
+For input size $n = 10^{3}$, runtime = $5 * 10^{6} + 10^{5} + 300$
+
+For input size $n = 10^{4}$, runtime = $5 * 10^{8} + 10^{6} + 300$
+
 
 The $5n^2$ term becomes larger than the remaining terms, $100n + 300$  , once $n$ becomes large enough, 20 in this case.
 We can say the runtime of this algorithm *grows* with order of $n^2$, dropping coefficient 6 and the remaining terms.
@@ -93,7 +101,7 @@ Tight bounds means that Big-$\Theta$ notation or Theta notation is like a range 
 Let's look at our `linearSearch` function! 
 Say $c_1$ operations run in one iteration of the loop, $n$ is the number of times the loop will run ($n$ = `lenArray`), and other constant overhead operations (like `return -1` and initializing `i`) are total $c_2$ operations.
  
-Then, total time for linear search in the worst case is $c_1 * n + c_1$
+Then, total time for linear search in the worst case is $c_1 * n + c_2$
 
 As we learned for Asymptotic notations, we ignore the coefficients and the less significant terms, so runtime is $\Theta$(n). 
 *When we say the runtime of an algorithm is $\Theta(n)$, we're saying when $n$ becomes large enough, runtime is* **at least $k_1 * n$ and at most $k_2 * n$**.
@@ -143,15 +151,15 @@ Read more on [Family of Bachmann–Landau notations](https://en.wikipedia.org/wi
 ## Functions in asymptotic notation
 
 
-| Order of f | Name        |
-|    :-:     | ----------- |
-|     1      | Constant    |
-|  $log n$   | Logarithmic |
-|    $n$     | Linear      |
-|$n * log n$ | Log Linear  |
-|   $n^2$    | Quadratic   |
-|   $2^n$    | Exponential |
-|    $n!$    | Factorial   |
+| Order of f  | Name        |
+| :---------: | ----------- |
+|      1      | Constant    |
+|   $log n$   | Logarithmic |
+|     $n$     | Linear      |
+| $n * log n$ | Log Linear  |
+|    $n^2$    | Quadratic   |
+|    $2^n$    | Exponential |
+|    $n!$     | Factorial   |
 (in order of: fast to slow)
 
 #### Constant Time $\Theta(1)$
@@ -229,11 +237,11 @@ Let's say `n` is the size of the input `array`.
 
 
 
-|   start    |    end    |     mid     |   num of elements  |  n  |
-|------------|-----------|-------------|--------------------|-----|  
-|     0      |     8     |      4      |            9       | n   |
-|     0      |     3     |      1      |            4       | n/2 |
-|     0      |     0     |      0      |            1       | n/4 |
+| start | end | mid | num of elements | n   |
+| ----- | --- | --- | --------------- | --- |
+| 0     | 8   | 4   | 9               | n   |
+| 0     | 3   | 1   | 4               | n/2 |
+| 0     | 0   | 0   | 1               | n/4 |
 
 
 Our input size in this example was 8, so the number of time the operations inside the loop executed = $log_2^8 = 3$ which matches our observation above! 
