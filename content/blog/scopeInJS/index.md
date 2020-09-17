@@ -48,15 +48,22 @@ For `a = 2`, if there is no such variable definition before of `a` in all nested
 
 
 ## Lexical Scope
-There are two predominant ways scopes works: *lexical scope*, and *dynamic scopes*. JavaScript employs lexical scope model.
 
-Lexing or tokenization is a process (first step of compilation) that takes a string of code and converts it into tokens with a *stateful rules deciding if each token is distant or part of another token*. So lexical scope is scope defined at lexing time.
+Lexing or tokenization is a process (first step of compilation) that takes a string of code and converts it into tokens with a *stateful rules deciding if each token is distant or part of another token*. So lexical scope is scope defined at lexing time (which depends on how you authored the code).
 
 Lexical scope is *authored by us while writing* and thus are *set in stone* by the time lexer (tokenizer) processes your code.
 
-Let’s explain how the lexical scope works with an example:
+There are two predominant ways scopes works: *lexical scope*, and *dynamic scopes*. *JavaScript employs lexical scope model*. Let's have a quick look at some differences between them to understand scopes better: 
+
+- Lexical scope is write-time, whereas dynamic scope are runtime. 
+- Lexical scope cares **where a function was declared** but dynamic code cares **where a function is called**.
+
+Now, let’s see how the lexical scope works with an example:
 
 ![](lexScope.png)
+
+Dividing code in blocks specifies what variables or identifers are "seen" in each block. In this example, let's see what identifiers are in within which scopes:
+
 1. Global scope: *foo*
 2. *foo* scope: *a, b, bar*
 3. *bar* scope: *c*
@@ -283,6 +290,9 @@ console.log(bar); //ReferenceError
 `let` allows a way to explicitly define  blocks.
 The identifers exists only in it's scope, i.e. their code block.
 
+
+##### `let` rebinds variables in each iteration
+
 Here, not only `let` binds `i` to for loop body but in fact it *rebinds* it to each iteration of the loop, after reassigning it's value from previous loop iteration. It's equivalent to this:
 
 ```js
@@ -295,7 +305,7 @@ Here, not only `let` binds `i` to for loop body but in fact it *rebinds* it to e
 }
 ```
 
-Also, `let` will not hoist the variable to entire scope of the block they appear in. They don't observably "exist" until the declaration statement.
+Also, `let` will not hoist the variable to entire scope of the block they appear in. They don't observably "exist" until the declaration statement. Observe this:
 ```js
 {
     console.log(bar); //ReferenceError
@@ -414,7 +424,7 @@ foo = function() {
 
 What if there were two function definition (of same name) hoisted? If there had been a duplicate function definition, it would have overridden the previous function definition.
 
-## Scope Closure
+## Closure
 
 > Closure is when a function is able to remember and access its lexical scope even when that function is executing outside its lexical scope.
 
@@ -439,11 +449,12 @@ But `bar` still has reference to the scope of `foo` (as it printed 2 instead of 
 
 When function is being invoked well outside of it's author time lexical scope, closure lets the function continue access to the lexical scope it was defined in author-time. 
 
-Any of various ways functions can be passed around as values, and invoked in other location, is exercising/observing closure.
+*Wherever and whenever* functions are passed around as values, and invoked in other location, is exercising/observing closure. Be it timers, event handlers, or any asynchronous task, when you pass in a *callback function*, closures are involved.
+
 
 Explained simply, whenever we *transport* an inner function outside of its lexical scope, it will maintain a scope reference to where it was originally declared, and whereever we execute him, that closure will be exercised.
 
-Let's look at some real exmples:
+Let's look at a `setTimeout` example:
 ```js
 function wait(msg) {
     setTimeout(function timer(){
@@ -453,14 +464,112 @@ function wait(msg) {
 
 wait("Hi");
 ```
-<!-- what are closures? how to see them  -->
-<!-- block scoping -->
+1000ms after executing `wait("hi")`, the inner scope of `wait` would *otherwise* be long gone but `timer` has a scope closure over `wait` keeping and using reference of variable `msg`.
 
-<!-- ### Modules -->
+#### Does IIFE use closure?
 
-<!-- modern modules -->
-<!-- future modules -->
+```js
+var a = 2;
+(function IIFE(){
+    console.log(a);
+})();
+```
+This code does NOT exercise closure. Why? Even though IIFE make their own scope, and it's using a variable `a` of it's enclosing scope but because it's called/executed in it's enclosing scope it's not closure.
 
+#### Loops and closure
+
+```js
+for (var i = 1; i <= 5; i++){
+    setTimeout(function timer(){
+        console.log(i);
+    }, i * 1000);
+}
+```
+This code outputs `6` five times. *How?* The loop stops when `i <= 5`, which will be first true when `i = 6`. So, all `timers` run after the completion of the loop (even `setTimeout(.., 0)`).
+
+Why *didn't* each setTimeout captures it's own copy of `i` (making result `1 2 3 4 5`)? Though each `setTimeout` is defined seperately in each loop iteration, they are closed over the same shared scope, which has only one `i`. Think of it's equalent using `setTimeout` *without loop* and incrementing a variable 5 times.
+
+Let's understand this more by changing the loop to print `1 2 3 4 5`.
+
+```js
+for(var i = 1; i <=5; i++){
+    (function IIFE(j) {
+        setTimeout(function timer() {
+            console.log(j)
+        }, j*1000);
+    })(i);
+}
+```
+The use of IIFE inside each iteration created a new scope for each iteration, so `timer` closures over it's enclosing scope (i.e. `IIFE` function), where the value of each `i` is passed as a parameter.
+
+But hold on, there is another way to get this output: use `let`!
+```js
+for (let i = 1; i <= 5; i++){
+    setTimeout(function timer(){
+        console.log(i);
+    }, i * 1000);
+}
+```
+`let` allows us to block scope this `for` loop. But as we [learned earlier](#let-rebinds-variables-in-each-iteration), `let` doesn't just declare variable in loop *once*, but for *each iteration*.
+
+#### Modules
+
+Modules are another code pattern that leverage the power of closures.
+
+```js
+function ModuleExample(id) {
+    var another = [1, 2, 3];
+    function printID() {
+        console.log(id);
+    }
+    function doAnother() {
+        console.log(another.join(" ! "))
+    }
+    
+    return {
+        doSomehing: doSomething,
+        doAnother: doAnother
+    } 
+}
+
+var foo = CoolModule("one");
+var foo2 = CoolModule("two");
+
+foo.printID() // "one"
+foo.doAnother(); //1 ! 2 ! 3
+
+foo2.printID() // "two"
+foo2.doAnother(); //1 ! 2 ! 3
+```
+This pattern in JavaScript is called *module*. 
+
+`ModuleExample` is just a function but has to be invoked for there to be a module instance created. It returns an object which references to inner functions but *not* data variables. Think of the object return value as *public API for our module*.
+
+Stating simply, there are 2 requirements for the module pattern to be exercised:
+- An outer enclosing function should exist, and it must be invoked at least once (each time creates a new module instance)
+- The enclosing function must return back at least function, so its inner function has closure over private scope and can access to modify private state. 
+
+(Cool tip: Inside the enclosing module function, you can name the returning object `let obj = { func: func };  return obj;` so you can change the returning functions dynamically)
+
+ES6 treats a file as a seperate module, and *must* be defined in seperate files.
+
+```js
+// bar.js
+function hello(who) {
+    return "Hello, " + who;
+}
+export hello;
+```
+```js
+// foo.js
+import hello from "bar";
+
+function awesome() {
+    let wish = hello("human")
+    console.log(wish); // Hello, human
+}
+```
+ The contents inside a module file are treated as if enclosed in a scope closure, just like function-closure modules we just saw.
 
 ## References
 
