@@ -1,6 +1,6 @@
 ---
 title: Scope and Closures in JavaScript
-date: "2020-09-05T22:12:03.284Z"
+date: "2020-09-09T22:12:03.284Z"
 description: "Learn a bit about Javascript engine, lexical scope, hoisting and closures."
 ---
 
@@ -10,7 +10,7 @@ description: "Learn a bit about Javascript engine, lexical scope, hoisting and c
 Let's start by understanding how JavaScript codes run.
 
 **JavaScript is a compiled & interpreted language.**
-It means that, in JavaScript, the code is complied and then executed right away.
+It means that, in JavaScript, the code is compiled and then executed right away.
 
 JavaScript engine compiles JavaScript to optimized machine code before execution. It is responsible for start-to-finish compilation and execution. It is compiler's job to parse and generate code for Engine to execute later. And it's Scope job to collect and maintain a lookup of all variables defined, and their rules of accessibility.
 
@@ -531,8 +531,8 @@ function ModuleExample(id) {
     } 
 }
 
-var foo = CoolModule("one");
-var foo2 = CoolModule("two");
+var foo = ModuleExample("one");
+var foo2 = ModuleExample("two");
 
 foo.printID() // "one"
 foo.doAnother(); //1 ! 2 ! 3
