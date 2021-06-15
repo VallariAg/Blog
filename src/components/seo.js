@@ -66,12 +66,12 @@ const SEO = ({ description, lang, meta, title }) => {
           content: `website`,
         },
         {
-          name: `og:image`,
+          property: `og:image`,
           content: ogImageUrl,
         },
         {
           name: `twitter:card`,
-          content: `summary`,
+          content: `summary_large_image`,
         },
         {
           name: `twitter:creator`,
@@ -85,6 +85,10 @@ const SEO = ({ description, lang, meta, title }) => {
           name: `twitter:description`,
           content: metaDescription,
         },
+        { 
+          property: `twitter:image:alt`, 
+          content: "www.blog.vallariag.dev", 
+        }
       ].concat(meta)}
     />
   )
