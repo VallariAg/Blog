@@ -10,8 +10,11 @@ import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
+const constructUrl = (baseUrl, path) =>
+  (!baseUrl || !path) ? null : `${baseUrl}${path}`;
+
 const SEO = ({ description, lang, meta, title }) => {
-  const { site } = useStaticQuery(
+  const data = useStaticQuery(
     graphql`
       query {
         site {
@@ -21,13 +24,22 @@ const SEO = ({ description, lang, meta, title }) => {
             social {
               twitter
             }
+            siteUrl
+          }
+        }
+        ogImageDefault: file(relativePath: {eq: "banner.png"}) { 
+          childImageSharp {
+            fixed(height: 315, width: 560) {
+              src
+            }
           }
         }
       }
     `
   )
+  const metaDescription = description || data.site.siteMetadata.description
 
-  const metaDescription = description || site.siteMetadata.description
+  const ogImageUrl = constructUrl(data.site.siteMetadata.siteUrl, data.ogImageDefault?.childImageSharp?.fixed?.src)
 
   return (
     <Helmet
@@ -35,7 +47,7 @@ const SEO = ({ description, lang, meta, title }) => {
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s | ${data.site.siteMetadata.title}`}
       meta={[
         {
           name: `description`,
@@ -54,12 +66,16 @@ const SEO = ({ description, lang, meta, title }) => {
           content: `website`,
         },
         {
+          name: `og:image`,
+          content: ogImageUrl,
+        },
+        {
           name: `twitter:card`,
           content: `summary`,
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.social.twitter,
+          content: data.site.siteMetadata.social.twitter,
         },
         {
           name: `twitter:title`,

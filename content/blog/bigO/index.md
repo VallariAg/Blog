@@ -295,7 +295,7 @@ One classic example is the [traveling salesman problem](https://en.wikipedia.org
 
 *Extremely poor running time.*
 
-![](/graph.webp)
+![](https://miro.medium.com/max/2928/1*5ZLci3SuR0zM_QlZOADv8Q.jpeg)
 
 ### Amortized Analysis
 

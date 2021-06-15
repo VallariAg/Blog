@@ -15,7 +15,7 @@ It means that, in JavaScript, the code is compiled and then executed right away.
 JavaScript engine compiles JavaScript to optimized machine code before execution. It is responsible for start-to-finish compilation and execution. It is compiler's job to parse and generate code for Engine to execute later. And it's Scope job to collect and maintain a lookup of all variables defined, and their rules of accessibility.
 
 
-Let's see how `var a = 2;` is compiled. Encountering `var a`, Compiler asks Scope about existence of a variable `a` in that particular Scope collection. If Scope says it exists, the compiler ignores `var a` (i.e. initializing a variable). Otherwise, if Scope says it doesn't exist, the compiler creates a variable `a` in that scope collection. Then Compiler produces code for Engine to execute later. Engine sees `a = 2` and asks Scope if `a` exists. Scope says yes, Engine assigns value `2` to `a`. If* Scope said no, that no such variable was introduced by compiler, Engine asks Scope to look in its nested loops.
+Let's see how `var a = 2;` is compiled. Encountering `var a`, Compiler asks Scope about existence of a variable `a` in that particular Scope collection. If Scope says it exists, the compiler ignores `var a` (i.e. initializing a variable). Otherwise, if Scope says it doesn't exist, the compiler creates a variable `a` in that scope collection. Then Compiler produces code for Engine to execute later. Engine sees `a = 2` and asks Scope if `a` exists. Scope says yes, Engine assigns value `2` to `a`. If* Scope said no, that no such variable was introduced by compiler, Engine asks Scope to look in its enclosing area (see this in nested loop).
 
 So, there are two kinds of look-ups. One, that Compiler asks Scope to look/create a variable. Another, where Engine asks Scope to return value of variable.
 
@@ -124,27 +124,27 @@ function foo(obj) {
     }
 }
 
-var o1 = {
+var obj1 = {
     a: 3
 };
 
-var o2 = {
+var obj2 = {
     b: 3
 };
 
-foo(o1);
-console.log(o1.a); // 2 -- expected
+foo(obj1);
+console.log(obj1.a); // 2 -- expected
 
-foo(o2);
-console.log(o2.a); //undefined
+foo(obj2);
+console.log(obj2.a); //undefined
 console.log(a); // 2 -- Leaked global!
 ```
-When we pass `o2`, which does not porssess property `a`, no such property is created in `with` and `o2.a` remains undefined.
+When we pass `obj2`, which does not porssess property `a`, no such property is created in `with` and `obj2.a` remains undefined.
 Also, a global variable `a` is created by the `a = 2` assignment.
 
 The `with` statement takes an object and treats that object as a wholly separate lexical scope. Thus, the object's properties are lexically defined in that scope. A normal var declaration inside that `with` block will be scoped to it's containing function scope.
 
-So, the scope declared by `with` statement to `o1` was `o1` scope, and it accessed it's property `o1.a`. But when we used  `o2` as a scope, it has no property `a` defined in that scope so LHS identifier lookup occurred (remember how it creates a new variable at global scope when the variable is not found in all it's nested scopes, in non-strict mode).
+So, the scope declared by `with` statement to `obj1` was `obj1` scope, and it accessed it's property `obj1.a`. But when we used  `obj2` as a scope, it has no property `a` defined in that scope so LHS identifier lookup occurred (remember how it creates a new variable at global scope when the variable is not found in all it's nested scopes, in non-strict mode).
 
 `eval()` modified the lexical scope, but `with` creates a whole new lexical scope from the object you pass to it.
 
@@ -339,7 +339,6 @@ Introduced by ES6, `const` also creates block scoped variables, but whose values
     console.log(err); // ReferenceError: 'err' not found
     ```
 
-<!-- Another reason to use block scope variables is *garbage collection*. As, we'll later discuss Closures,  TODO -->
 
 
 ## Hoisting
