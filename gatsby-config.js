@@ -6,7 +6,7 @@ module.exports = {
       summary: `, learning new technology and making cute art.`,
     },
     description: `Blogs written by Vallari`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.app/`,
+    siteUrl: `https://www.blog.vallariag.dev`,
     social: {
       twitter: `vallariag`,
     },
