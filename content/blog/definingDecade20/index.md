@@ -1,7 +1,7 @@
 ---
 title: A psychologist's advice for careers in twenties
 date: "2021-06-15T22:12:03.284Z"
-description: "Lessons about building a professional identity from book The Defining Decade 20s"
+description: "Lessons about building professional identity from the book The Defining Decade 20s by Meg Jay"
 ---
 
 
