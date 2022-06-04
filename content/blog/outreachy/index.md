@@ -4,7 +4,7 @@ date: "2022-06-01T22:12:03.284Z"
 description: "Quick introduction to open-source programs and my participation with Outreachy"
 ---
 
-Open-source contribution is an excellent way to build skills and expand on one's current knowledge by working on large scale projects and interact with professionals. Contributing to FOSS (Free and Open Source Software) is an amazing opportunity to help in building of open-sourced tools and .
+Open-source contribution is an excellent way to build skills and expand on one's current knowledge by working on large scale projects and interact with professionals. Contributing to FOSS (Free and Open Source Software) is an amazing opportunity to help in building open-source tools and becoming a part of a community.
 
 One can get started by simply selecting an organization they wish to contribute, picking an issue on one of it's project, and trying to solve that. 
 
