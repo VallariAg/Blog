@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `Stuff I learn`,
+    title: `Vallari's Blog`,
     author: {
       name: `Vallari`,
-      summary: `, learning new technology and making cute art.`,
+      summary: `-`,
     },
     description: `Blogs written by Vallari`,
     siteUrl: `https://www.blog.vallariag.dev`,

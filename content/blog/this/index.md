@@ -1,5 +1,5 @@
 ---
-title: "What's `this` in JS?"
+title: "What's `this` in JavaScript?"
 date: "2020-09-29T22:12:03.284Z"
 description: "Learn concept behind 'this' binding."
 ---
