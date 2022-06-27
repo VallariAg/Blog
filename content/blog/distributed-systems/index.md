@@ -4,7 +4,7 @@ date: "2022-06-20T22:12:03.284Z"
 description: "An introduction to distributed systems"
 ---
 
-# Distributed Systems
+## What are distributed systems?
 
 Definition:
 A distributed system is a system whose components are located on different networked computers, which communicate and coordinate their actions by passing messages to one another from any system. The components interact with one another in order to achieve a common goal. 
