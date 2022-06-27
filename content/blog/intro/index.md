@@ -15,7 +15,7 @@ I've part of **Women TechMakers Engineering Fellow** scholarship program by **Ta
 
 I've also received [Anita Borg's scholarship](https://ghc.anitab.org/attend/scholarships/) to attend **Grace Hopper Celebration**, the world's largest conference for women in STEM. 
 
-I've build and worked on full-stack projects with React, Angular, NodeJS, Django, REST framework, GraphQL, Docker. Checkout my projects on **[Github](https://github.com/VallariAg)**!
+I've build and worked on full-stack projects with React, Angular, NodeJS, Django, GraphQL, Docker. Checkout my projects on **[Github](https://github.com/VallariAg)**!
 
 Illustrating and drawing is something I love to do in my free time, checkout my [Dribbble](https://dribbble.com/VallariAg) and [Instagram](https://www.instagram.com/vallariag/) accounts.
 
