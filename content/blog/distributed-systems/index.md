@@ -28,7 +28,7 @@ Example: In a centralized system, database is stored in a single system. So when
 
 The distributed system breaks down a task into pieces and each pieces of the task is taken by available nodes to process. Once a node is done with it's own sub-task, it can work on another piece of the task. All the nodes report their finished job which is combined and sent back to the user. When a system has thousands of nodes, a task - which could've taken days to complete by a centralized system - executes in few minutes.  
 
-Distributed systems have one of the four different basic architecture models:
+Some basic architecture models of distributed systems:
 
 1. **Client-server** -  Clients contact the server for data, then format it and display it to the end-user. The end-user can also make a change from the client-side and commit it back to the server to make it permanent.
 
@@ -42,16 +42,39 @@ Distributed systems have one of the four different basic architecture models:
 
 ## Why build a distributed system?
 
-## Key Characteristics 
+Distributed systems offer better:
+1. Scalability
+2. Availability
+3. Durability 
+4. Performance
+
+<!-- ## Key Characteristics  -->
 
 ### Scalability
-### Reliability
+
+> It is the ability of a system, network, or process, to handle a growing amount of work in a capable manner or its ability to be enlarged to accommodate that growth.
+
 ### Availability
-### Efficiency
-### Serviceability or Manageability
+
+> It is the proportion of time a system is in a functioning condition. If a user cannot access the system, it is said to be unavailable. 
 
 
-## Challenges of distributed systems
+**Fault tolerance:** ability of a system to behave in a well-defined manner once faults occur 
+
+### Performance
+
+> It is characterized by the amount of useful work accomplished by a computer system compared to the time and resources used.
+
+To achieve one or more of these:
+- Short response time/low latency for a given piece of work
+- High throughput (rate of processing work)
+- Low utilization of computing resource(s)
+
+**Latency:** The state of being latent. Delay, a period between the initiation of something and the occurrence.
+<!-- ### Serviceability or Manageability -->
+
+
+<!-- ## Challenges of distributed systems -->
 
 
 <!-- 
