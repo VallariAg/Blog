@@ -1,7 +1,7 @@
 ---
 title: Brief Introduction to Distributed Systems
 date: "2022-06-20T22:12:03.284Z"
-description: "An introduction to distributed systems"
+description: "An introduction to distributed systems - what, how, and why. "
 ---
 
 ## What are distributed systems?
