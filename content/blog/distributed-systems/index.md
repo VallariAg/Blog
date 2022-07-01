@@ -106,11 +106,23 @@ CAP and stuff
 -->
 
 ---
-This is just a brief introduction to distributed systems, if you want to further explore and understand them then please refer to the "Further Readings" section below for few starter resources to expland knowledge on the topic. If you find an error in concepts explained above, please raise an issue [here](https://github.com/VallariAg/Blog/issues/new).
+This is just a brief introduction to distributed systems, if you want to further explore and understand them then please refer to the "Further Readings" section below for few resources to expland knowledge on the topic. If you find an error in concepts explained above, please raise an issue [here](https://github.com/VallariAg/Blog/issues/new).
 
 ## Further Readings
 
-- https://gousios.org/courses/bigdata/dist-systems-intro.html
-- [Distributed Systems for fun and profit](http://book.mixu.net/distsys/single-page.html) 
-- [Scalable Web Architecture and Distributed Systems](http://www.aosabook.org/en/distsys.html) 
-- [Distributed Systems in One Lesson by Tim Berglund](https://www.youtube.com/watch?v=Y6Ev8GIlbxc) 
+References banks created for understanding distributed systems:
+- [Collection of bazillions of resources](https://github.com/theanalyst/awesome-distributed-systems)
+- [Papers on Distributed systems](http://muratbuffalo.blogspot.com/2021/02/foundational-distributed-systems-papers.html)
+
+Articles:
+- [Everything-to-know-about-distributed-systems](https://dev.to/mukulalpha/system-design-101-everything-to-know-about-distributed-systems-2hd6)
+- [Thorough-introduction-to-distributed-systems](https://www.freecodecamp.org/news/a-thorough-introduction-to-distributed-systems-3b91562c9b3c/amp/)
+- [Notes - Introduction to Distributed systems](https://gousios.org/courses/bigdata/dist-systems-intro.html)
+
+Youtube:
+- [Distributed Systems in One Lesson by Tim Berglund](https://www.youtube.com/watch?v=Y6Ev8GIlbxc)
+
+Books:
+- [Distributed Systems for fun and profit](http://book.mixu.net/distsys/single-page.html) [Free]
+- [Scalable Web Architecture and Distributed Systems](http://www.aosabook.org/en/distsys.html) [Free] 
+
