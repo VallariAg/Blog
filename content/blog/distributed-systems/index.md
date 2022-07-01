@@ -44,8 +44,8 @@ Some basic architecture models of distributed systems:
 
 Distributed systems offer better:
 1. Scalability
-2. Availability
-3. Durability 
+2. Reliability
+3. Availability
 4. Performance
 
 <!-- ## Key Characteristics  -->
@@ -54,23 +54,42 @@ Distributed systems offer better:
 
 > It is the ability of a system, network, or process, to handle a growing amount of work in a capable manner or its ability to be enlarged to accommodate that growth.
 
+A distributed system that can support growing amount of work is scalable. Systems need to scale for many reasons like increased data volume or increased work. 
+
+Distributed systems allows you to scale horizontally. **Horizontal scaling** means that you scale by adding more servers into your pool of resources, whereas **Vertical scaling** means that you scale by adding more power (CPU, RAM, Storage, etc.) to an existing server. Vertical scaling has a limit to the capacity of a server to evolve. Example for horizontal scaling is **Cassandra** and **MongoDB**, and vertical scaling is simpling moving the resources to a larger server.
+
+###  Reliability
+
+> It is the probability a system will fail in a given period.
+
+A distributed system is considered reliable if it keeps delivering its services even when one or several of its software or hardware components fail. This means that if one of the node is down, the resources stored in that node can be available by one of the other nodes - ensuring there is no single point of failure. 
+
+The cost of such reliable behaviour is **redundancy**, and going extra steps to ensure the redundant data is synchronized to maintain a state of data across all copies. 
+
 ### Availability
 
 > It is the proportion of time a system is in a functioning condition. If a user cannot access the system, it is said to be unavailable. 
+  
 
+A single machine cannot tolerate any failures since it either fails or doesn't. Distributed systems can take a bunch of unreliable components, and build a reliable system on top of them.
 
-**Fault tolerance:** ability of a system to behave in a well-defined manner once faults occur 
+Availability from a technical perspective is mostly about being fault tolerant. **Fault tolerance** is the ability of a system to behave in a well-defined manner once faults occur.
+
+How is reliability different from availability?
+Reliability is availability over time, considering the full range of possible real-world conditions that can occur.
+
 
 ### Performance
 
 > It is characterized by the amount of useful work accomplished by a computer system compared to the time and resources used.
 
-To achieve one or more of these:
+Performace is to achieve one or more of the following:
 - Short response time/low latency for a given piece of work
 - High throughput (rate of processing work)
 - Low utilization of computing resource(s)
 
-**Latency:** The state of being latent. Delay, a period between the initiation of something and the occurrence.
+Two standard measures of its performance are **latency** (response time) - that denotes the delay to obtain the first item - and the **throughput** (or bandwidth), which denotes the number of items delivered in a given time unit (e.g., a second). 
+
 <!-- ### Serviceability or Manageability -->
 
 
@@ -86,10 +105,10 @@ CAP and stuff
 ## Messaging
 -->
 
+---
+This is just a brief introduction to distributed systems, if you want to further explore and understand them then please refer to the "Further Readings" section below for few starter resources to expland knowledge on the topic. If you find an error in concepts explained above, please raise an issue [here](https://github.com/VallariAg/Blog/issues/new).
 
-If you find an error in concepts explained above, please raise an issue here.
-
-## Further Reading
+## Further Readings
 
 - https://gousios.org/courses/bigdata/dist-systems-intro.html
 - [Distributed Systems for fun and profit](http://book.mixu.net/distsys/single-page.html) 
