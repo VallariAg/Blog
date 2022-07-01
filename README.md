@@ -1,6 +1,5 @@
 # Blog
 
-My blog where I'll post articles about tech related stuff.
+My technical blog. Made with Gatsby starter-blog.
 
-Made with Gatsby starter-blog.
-
+Link:  [stuff-i-learn.netlify.app/](https://stuff-i-learn.netlify.app/) 
