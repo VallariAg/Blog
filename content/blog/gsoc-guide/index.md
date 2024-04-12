@@ -1,7 +1,7 @@
 ---
-title: "Guide for GSoC and Outreachy Applicants"
+title: "Hitchhiker's Guide for GSoC and Outreachy Applicants"
 date: "2022-12-15T22:12:03.284Z"
-description: "Complete guide for applicants - details about program's eligibility criteria, program schedule, selecting orgs/projects, and a step-by-step walk through the program phases, proposal template, and a brief story my experience"
+description: "Complete guide for applicants - details about program's eligibility criteria, program schedule, selecting orgs/projects, and a step-by-step walk through the program phases, and proposal template."
 ---
 
 
@@ -107,7 +107,8 @@ Since all organisations work differently, they might have different rules around
 9. Availability: Ensure that you would be able to devote 40 hours per week to this project. Explain if you would need some time off for exams. And how you would juggle that with an internship. If you know about your exams, plan your timeline around that by keeping a week or two for buffer.
 
 In outreachy's proposal, the above 4, 5, 6, and 8 points are mandatory to be filled. For more details, see the application form during contribution period. 
-#### My Experience 
+
+<!-- #### My Experience 
 
 During pandemic in early 2021 when I was in second year of my college, I started exploring open-source projects. I checked out projects like [Internet Archive](https://github.com/internetarchive) , [Postman](https://github.com/postmanlabs) , and [Oppia](https://github.com/oppia/oppia). That year, when applying for the programs, I faced some minor obstacles which ranged from my laptop not having enough resources to handle running a huge project like Oppia (to be fair, it couldn't handle a Figma tab either), to me becoming one of the depressing numbers of infected people in the second wave of COVID in India. Later in the year, I upgraded the memory of my laptop and also explored other projects like [Gitlab](https://gitlab.com/gitlab-org/gitlab) which seemed interesting with good local setup and documentation, but used technology like Ruby and Vue which I had never used by then. While struggling my way around building Ruby projects, I reached out to Gitlab's last year intern and asked about their experience. Eventually, I decided to move onto something within my knowledge of tech stack. My sister was a past intern at [Ceph](https://github.com/ceph) and so she encouraged me to check that out next. 
 By early 2022, I saw a list of GSoC projects posted by Ceph and found one "Visualization of Ceph Cluster" project right in the sweet spot of interesting and within my technical knowledge of Angular which I had used for few projects in my first year of college. So, I contacted the mentors and they guided me and patiently reviewed my first few good-first-issues PRs for Ceph Dashboard. After my initial application for Outreachy was accepted, when the project list for Outreachy projects with Ceph were released, the Visualization project was not part of them. I decided to submit my proposal as GSoC intern instead, meanwhile I looked at the Outreachy ceph projects. One of them was called "Making Teuthology a better detective" with a different team at Ceph which used Python. I reached out to the mentors of the teuthology project and they shared a list of tasks to do. By the time the application deadline came, I had proposals ready for both the projects so I submitted them and got selected for both.
@@ -121,4 +122,7 @@ Though humans tend to forget/undermine their own past struggles, I do remember b
 After some discussions and deliberation, I decided to withdraw from the GSoC project and do the Outreachy internship over the summer because I wanted to focus on one project and give that my best effort. During my internship, all of my mentors were kind and helped me enormously as I struggled with the workings of the project. They appreciated even subtle techniques in my code and gave me the freedom to learn through trial and error.
 
 
+ -->
+
+Closing notes: TODO
 
