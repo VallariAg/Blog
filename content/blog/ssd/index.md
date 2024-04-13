@@ -1,23 +1,9 @@
 ---
-title: Understanding SSDs
+title: "Understanding SSDs: Flash Storage and Controller Functions (Part 1)"
 date: "2024-04-08T22:12:03.284Z"
-description: "Overview of SSD flash memory, controller, cache, and host interface."
+description: "In-depth explaination of how flash memory works and brief understanding of SSD controller operations like wear-levelling and garbage collection."
 ---
 
-# SSDs
-
-Index:
-
-SSD architecture - [https://forum.huawei.com/enterprise/en/ssd-technologies-ssd-architecture/thread/667232672784728064-667213859733254144](https://forum.huawei.com/enterprise/en/ssd-technologies-ssd-architecture/thread/667232672784728064-667213859733254144)
-
-1. Controller
-2. NAND flash memory
-3. DRAM cache
-4. Host interface - [https://en.wikipedia.org/wiki/Solid-state_drive#Host_interface](https://en.wikipedia.org/wiki/Solid-state_drive#Host_interface) 
-    - SCSI, PCIe, SATA
-    - SSDs support various logical device interfaces, such as [Advanced Host Controller Interface](https://en.wikipedia.org/wiki/Advanced_Host_Controller_Interface) (AHCI) and NVMe.
-5. Firware
-6. Form factors - M.2, U.2, AIC
 
 # SSD Architecture
 
@@ -25,7 +11,9 @@ SSD architecture - [https://forum.huawei.com/enterprise/en/ssd-technologies-ssd-
 
 (picture credit: [https://blog.bytebytego.com/p/why-is-a-solid-state-drive-ssd-fast](https://blog.bytebytego.com/p/why-is-a-solid-state-drive-ssd-fast))
 
-NAND vs NOR flash storage - brief 
+In this blog, I'll be covering about SSD Controller and the Flash Storage. In the upcoming next article, we'll learn about host interfaces and DRAM. 
+
+<!-- TODO: NAND vs NOR flash storage - brief  -->
 
 ## 1. NAND flash memory
 
@@ -69,11 +57,11 @@ SLCs have bigger voltage guard band between it’s state compared to MLC and TLC
 
 (picture credit: [https://cseweb.ucsd.edu/classes/sp14/cse240A-a/Slides/20_Storage.pdf](https://cseweb.ucsd.edu/classes/sp14/cse240A-a/Slides/20_Storage.pdf))
 
-explain why reads and writes are page level. and erase are block level.
+<!-- TODO: explain why reads and writes are page level. and erase are block level. -->
 
 ## 2. SSD controller
 
-**2.1 Program/Erase Cycles - Read Pages and Erase Blocks**
+#### **2.1 Program/Erase Cycles - Read Pages and Erase Blocks**
 
 ![Untitled](images/ssd-controller.png)
 
@@ -97,11 +85,11 @@ The above process of writing on a page and then erasing a block and rewriting on
 
 Queues: Only one command can be executed to a die at a time - other incoming commands are queued. So if want to do different operations on different blocks within the same die, then even those operations would be queued. 
 
-**2.2 Flash translation layer**
+#### **2.2 Flash translation layer**
 
 It is a component inside the SSD Controller which hides the inner characteristics of NAND flash and exposes only an array of Logical Block Addresses (LBA) to the host. It’s two main purpose’s are: logical block mapping, wear levelling, and garbage collection.
 
-1. **Logical block mapping**:
+**1. Logical block mapping**:
 
 The logical block mapping keeps a table which translates logical block addresses (LBAs) from the host space into physical block addresses (PBAs) in the physical NAND-flash memory space. This table is stored in RAM for fast access and also saved in persistent flash memory in case of power failure. When SSD is powered on, the mapping table is read from persistent memory and reconstructed in RAM of the SSD. 
 
@@ -109,9 +97,9 @@ Why do we need it? When data is updated and a page is marked stale and updated-d
 
 **Page-level mapping** consists of mapping of each logical page to physical. But it take a lot of space because the page mapping table in RAM becomes huge. **Block-level mapping** consists of mapping of each block. This takes much lesser space in RAM (almost x times less of page-mapping, where x is the amount of pages in each block). But it’s inefficient because for small changes on part of a block, full block would need to be rewritten (increasing the write amplification). The hybrid solution is a **log-block mapping**. All write operations are written sequentially to a “log-block” and, when it’s full, then it’s merged with the data block into a free data block. Few log-blocks are maintained in RAM at page level granularity. Data blocks are maintained with a block granularity. More detailed explanation here: [https://codecapsule.com/2014/02/12/coding-for-ssds-part-3-pages-blocks-and-the-flash-translation-layer/](https://codecapsule.com/2014/02/12/coding-for-ssds-part-3-pages-blocks-and-the-flash-translation-layer/)
 
-1. **Wear Levelling:**
+**2. Wear Levelling:**
 
-why flash-cell wears off: [https://flashdba.com/2015/01/09/understanding-flash-floating-gates-and-wear/](https://flashdba.com/2015/01/09/understanding-flash-floating-gates-and-wear/)
+<!-- TODO: why flash-cell wears off: [https://flashdba.com/2015/01/09/understanding-flash-floating-gates-and-wear/](https://flashdba.com/2015/01/09/understanding-flash-floating-gates-and-wear/) -->
 
 NAND flash cell have an EOL due to wear in the cell cause by tunnelling and hence they provide a limited P/E cycles. If a block reaches it’s P/E cycle limit, SSD controller will mark it as unusable, and the storage will decrease than what was before! That’s why controller implement wear leveling. It distributes P/E cycles evenly among the blocks so all blocks wear off at the same time. Wear levelling algorithms avoids the situation where some block are erased more frequently compared to others. During writes, it tries to spread the data fairly over the block.
 
@@ -119,11 +107,11 @@ Now if all blocks are updated regularly, then we have no problem because they’
 
 Hence, block management is a trade-off between maximising wear leveling and minimising write amplification.
 
-1. **Garbage collection:**
+**3. Garbage collection:**
 
 Garbage collection is a process carried out to erase stale pages. Active data in a block is moved elsewhere, leaving only stale pages on the block. Then this block is erased. Here, the block might have a lot of active data and only small amount of stale pages, this might cause a lot of rewriting to another block to erase small amount of stale pages - increasing write amplification. Hence, a balance is required in garbage collection algorithms too for block management.
 
-There could arise a situation where there’s no appropriate empty pages to which the active data can be copied from other blocks, if a lot of the pages contain active data. This could lead to a situation where no writes/erase operations could be performed, making the SSD “read-only” even when actual used space is not 100% because stale pages use up a lot of space. This is best explained with graphic example here - [https://flashdba.com/2014/10/15/understanding-flash-garbage-collection-matters/](https://flashdba.com/2014/10/15/understanding-flash-garbage-collection-matters/).  Hence, to avoid the above situation an additional buffer space is given known as **over-provisioning**. This buffer space is reserved and not visible to the host as available space. In this additional space, writes can be saved while the stale pages are being erased. 
+There could arise a situation where there’s no appropriate empty pages to which the active data can be copied from other blocks, if a lot of the pages contain active data. This could lead to a situation where no writes/erase operations could be performed, making the SSD “read-only” even when actual used space is not 100% because stale pages use up a lot of space. This is best explained with graphic example can be found [here](https://flashdba.com/2014/10/15/understanding-flash-garbage-collection-matters/).  Hence, to avoid the above situation an additional buffer space is given known as **over-provisioning**. This buffer space is reserved and not visible to the host as available space. In this additional space, writes can be saved while the stale pages are being erased. 
 
 Garbage collection are of two modes: Background Garbage Collection and Active Garbage Collection. Since operations are queued in a die (only one operation happens at a time), a host’s read operation (which is fast) can be queued behind a FTL’s garbage collection operation (erases are comparatively very slow). This results in an unpredictable and inefficient read operation for the host user - the read will happen after the slow erase operation. That’s why all garbage collection operations are performed at a time when it doesn’t affect the users, known as **background garbage collection**. But if data is being changed more frequently than BCG can clean up, then it’s switched to **active garbage collection** mode where users operations are queued behind garbage operations. This point where users’s operation would show increased latency is known as **write-off cliff.**  
 
@@ -131,44 +119,6 @@ Garbage collection are of two modes: Background Garbage Collection and Active Ga
 
 When user deletes data, a TRIM command is issued to notify the SSD that data is deleted and it can be marked as stale (to be garbage collected later). This is a command supported by some SSDs - it’s important that both the OS and SSD support it. For systems that don’t support it, deletion of data is marked on the OS but it doesn’t notify the SSD, which keeps the data around until the LBA is overwritten by the OS.
 
-## 3. Host interfaces
-
-[https://www.makeuseof.com/wp-content/uploads/2017/11/101-Guide-To-Solid-State-Drives.pdf](https://www.makeuseof.com/wp-content/uploads/2017/11/101-Guide-To-Solid-State-Drives.pdf)
-
-1. Physical interface (SATA/PCIe)
-2. Logical interface (NVMe)
-
-form Factors
-
-SCSI 
-
-[https://computer.howstuffworks.com/scsi.htm](https://computer.howstuffworks.com/scsi.htm) 
-
-iscsi - [https://www.packetcoders.io/iscsi-san-protocols-explained/](https://www.packetcoders.io/iscsi-san-protocols-explained/) 
-
-ana
-
-LUNs: [https://www.minitool.com/lib/logical-unit-number.html](https://www.minitool.com/lib/logical-unit-number.html)
-
-[https://www.lightbitslabs.com/blog/understanding-iscsi/](https://www.lightbitslabs.com/blog/understanding-iscsi/) 
-
-NVMe
-
-[https://sniansfblog.org/a-beginners-guide-to-nvme/](https://sniansfblog.org/a-beginners-guide-to-nvme/) 
-
-[https://www.purestorage.com/knowledge/what-is-nvme.html](https://www.purestorage.com/knowledge/what-is-nvme.html) 
-
-cmmand queuing: [https://en.wikipedia.org/wiki/Native_Command_Queuing](https://en.wikipedia.org/wiki/Native_Command_Queuing) 
-
-[https://codecapsule.com/2014/02/12/coding-for-ssds-part-4-advanced-functionalities-and-internal-parallelism/](https://codecapsule.com/2014/02/12/coding-for-ssds-part-4-advanced-functionalities-and-internal-parallelism/)
-
-[https://www.youtube.com/watch?v=PV3e2B8VLQo](https://www.youtube.com/watch?v=PV3e2B8VLQo) 
-
-PCIe
-
- [certain PCIe flash cards](http://www.flashmemorysummit.com/English/Collaterals/Proceedings/2012/20120821_TB11_Batwara.pdf), it’s possible that some or all of the FTL functionality runs on the host, using host CPU cycles and DRAM.
-
-[https://computer.howstuffworks.com/pci-express.htm](https://computer.howstuffworks.com/pci-express.htm) 
 
 # References:
 
@@ -193,10 +143,10 @@ Controller:
 - Background/active garbage collection & write-off cliff  [https://flashdba.com/2014/11/24/understanding-flash-the-write-cliff/](https://flashdba.com/2014/11/24/understanding-flash-the-write-cliff/)
 - [https://en.wikipedia.org/wiki/Flash_memory_controller](https://en.wikipedia.org/wiki/Flash_memory_controller)
 
-- [https://www.elinfor.com/knowledge/overview-of-ssd-structure-and-basic-working-principle1-p-11203](https://www.elinfor.com/knowledge/overview-of-ssd-structure-and-basic-working-principle1-p-11203)
-    - [https://www.elinfor.com/knowledge/overview-of-ssd-structure-and-basic-working-principle2-p-11204](https://www.elinfor.com/knowledge/overview-of-ssd-structure-and-basic-working-principle2-p-11204)
-- [https://en.wikipedia.org/wiki/Logical_block_addressing](https://en.wikipedia.org/wiki/Logical_block_addressing)
-- [https://codecapsule.com/2014/02/12/coding-for-ssds-part-1-introduction-and-table-of-contents/](https://codecapsule.com/2014/02/12/coding-for-ssds-part-1-introduction-and-table-of-contents/)
-- [https://robots.net/tech/what-technology-is-used-to-assure-that-the-logical-block-addressing-on-a-solid-state-drive/](https://robots.net/tech/what-technology-is-used-to-assure-that-the-logical-block-addressing-on-a-solid-state-drive/)
-- [https://spdk.io/doc/ssd_internals.html](https://spdk.io/doc/ssd_internals.html)
-- [https://flashdba.com/2014/06/20/understanding-flash-blocks-pages-and-program-erases/](https://flashdba.com/2014/06/20/understanding-flash-blocks-pages-and-program-erases/)
+---
+
+
+You can reach out to me via email at _vallariag+blog@gmail.com_, or:
+- LinkedIn: [linkedin.com/in/vallariag](www.linkedin.com/in/vallariag)
+- Twitter: [twitter.com/VallariAg](https://twitter.com/VallariAg)
+
