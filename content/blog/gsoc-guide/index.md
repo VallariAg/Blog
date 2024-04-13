@@ -152,11 +152,11 @@ Key Takeaways:
 2. Make your proposal as descriptive as possible - it's where you can show-off your understanding of the problem statement.
 3. Open-source is bigger than these programs - you can always contribute and learn to these projects and become part of their community.
 
----
-
 If you have any questions, you're welcome to share them with me. Good luck!
 
+---
+
 You can reach out to me via email at _vallariag+blog@gmail.com_, or:
-- LinkedIn: https://www.linkedin.com/in/vallariag
-- Twitter: https://twitter.com/VallariAg
+- LinkedIn: [linkedin.com/in/vallariag](www.linkedin.com/in/vallariag)
+- Twitter: [twitter.com/VallariAg](https://twitter.com/VallariAg)
 
