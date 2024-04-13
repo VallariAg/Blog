@@ -1,20 +1,56 @@
 ---
 title: "A Mostly Harmless experience with open-source programs"
-date: "2022-12-15T22:12:03.284Z"
-description: "Complete guide for applicants - details about program's eligibility criteria, program schedule, selecting orgs/projects, and a step-by-step walk through the program phases, proposal template, and a brief story my experience"
+date: "2023-04-15T22:12:03.284Z"
+description: "Sharing my personal journey of interning with Google Summer of Code, Outreachy, and attending Grace Hopper Open Source Day."
 ---
 
+In this space, I'll be unfolding my journey through various open-source programs. I'll be skipping the technical nitty-gritty because I want the spotlight on the journey itself.
 
-During pandemic in early 2021 when I was in second year of my college, I started exploring open-source projects. I checked out projects like [Internet Archive](https://github.com/internetarchive) , [Postman](https://github.com/postmanlabs) , and [Oppia](https://github.com/oppia/oppia). That year, when applying for the programs, I faced some minor obstacles which ranged from my laptop not having enough resources to handle running a huge project like Oppia (to be fair, it couldn't handle a Figma tab either), to me becoming one of the depressing numbers of infected people in the second wave of COVID in India. Later in the year, I upgraded the memory of my laptop and also explored other projects like [Gitlab](https://gitlab.com/gitlab-org/gitlab) which seemed interesting with good local setup and documentation, but used technology like Ruby and Vue which I had never used by then. While struggling my way around building Ruby projects, I reached out to Gitlab's last year intern and asked about their experience. Eventually, I decided to move onto something within my knowledge of tech stack. My sister was a past intern at [Ceph](https://github.com/ceph) and so she encouraged me to check that out next. 
-By early 2022, I saw a list of GSoC projects posted by Ceph and found one "Visualization of Ceph Cluster" project right in the sweet spot of interesting and within my technical knowledge of Angular which I had used for few projects in my first year of college. So, I contacted the mentors and they guided me and patiently reviewed my first few good-first-issues PRs for Ceph Dashboard. After my initial application for Outreachy was accepted, when the project list for Outreachy projects with Ceph were released, the Visualization project was not part of them. I decided to submit my proposal as GSoC intern instead, meanwhile I looked at the Outreachy ceph projects. One of them was called "Making Teuthology a better detective" with a different team at Ceph which used Python. I reached out to the mentors of the teuthology project and they shared a list of tasks to do. By the time the application deadline came, I had proposals ready for both the projects so I submitted them and got selected for both.
+### Google Summer of Code and Outreachy
+
+In the midst of the pandemic in early 2021, during my second year of college, I started exploring open-source projects. I checked out projects like [Internet Archive](https://github.com/internetarchive), [Postman](https://github.com/postmanlabs), and [Oppia](https://github.com/oppia/oppia). 
+
+In the first couple of months of the year, I was starting to play around with good-first-issues and planning to apply for the GSoC/Outreachy programs. I couldn't get far that year due to few _minor_ obstacles which ranged from my laptop not having enough resources to handle running a huge project like Oppia (to be fair, it couldn't handle a Figma tab either), to me becoming one of the depressing numbers of infected people in the deadly second wave of COVID in India that March. 
+
+Later in the year, I upgraded the memory of my laptop and switched out the old hard-disk with a new SSD, as I continued to explore projects which seemed interesting to me. In particular, I liked [Gitlab](https://gitlab.com/gitlab-org/gitlab) which had good local setup and documentation to work with, though it used technology like Ruby and Vue which I had never used by then. While struggling my way around learning and building Ruby projects, I reached out to Gitlab's last year's intern on LinkedIn and asked about their experience. 
+
+By late December 2021, Gitlab had opened an issue where maintainers were planning various 2022 internship projects and I was struggling to understand the problem statement and the complex Ruby/Vue code around it. Eventually, I decided to move onto something within my knowledge of tech stack. My sister was a past intern at [Ceph](https://github.com/ceph) and so she encouraged me to check that out next. 
+
+By early 2022, I saw a list of GSoC projects posted by Ceph and found one "Visualization of Ceph Cluster" project right in the sweet spot of interesting and within my technical knowledge of Angular which I had used for few projects in my first year of college. So, I contacted the mentors and they guided me and patiently reviewed my first few good-first-issues PRs for Ceph Dashboard. After my initial application for Outreachy was accepted, when the project list for Outreachy projects with Ceph were released, the Visualization project was not part of them. I decided to submit my proposal as GSoC intern instead, meanwhile I looked at the ceph projects that were also part of Outreachy. One of them was called "Making Teuthology a better detective" with a different team at Ceph. The problem statement looked approachable and I was comfortable writing Python (teuthology codebase is written in Python), so I reached out to the mentors of the teuthology project and they shared a list of tasks to do. By the time the application deadline came, I had proposals ready for both the projects so I submitted them and got selected for both.
 
 ![gsoc-email.png](./gsoc-email.png)
 
 ![[outreachy-email.png]](./outreachy-email.png)
 
-Though humans tend to forget/undermine their own past struggles, I do remember being stressed during my contribution period of Feb-April. I had somehow managed to again get COVID in January 2022 and then declined a Ruby internship offer to focus on my two work-in-progress Ceph projects and college. I can't advise on stress-management but I can recommend trying your best, taking breaks, and talking with your personal mentors. The advise that had the biggest impact on me was "Start before you're ready" which encourages learning by getting your hands dirty.
+I remember being stressed during my contribution period of Feb-April 2022. I had somehow managed to again get COVID in January 2022 and then declined a Ruby internship offer to focus on my two work-in-progress Ceph projects and college. I can't advise on stress-management but I can recommend trying your best, taking breaks, and talking with personal mentors. The advise that had the biggest impact on me was "Start before you're ready" which encourages learning by getting your hands dirty.
 
-After some discussions and deliberation, I decided to withdraw from the GSoC project and do the Outreachy internship over the summer because I wanted to focus on one project and give that my best effort. During my internship, all of my mentors were kind and helped me enormously as I struggled with the workings of the project. They appreciated even subtle techniques in my code and gave me the freedom to learn through trial and error.
+After some deliberation, I decided to withdraw from the Ceph Dashboard GSoC project and only do the Outreachy internship over the summer because I wanted to focus on one project and give that my best effort. I saw great opportunity and growth in both the projects but because I wouldn't be able to apply for Outreachy again later (since past-GSoC applicants are illegible for Outreachy), I decided to go with Teuthology Project with Outreachy for that year. 
+
+**Internship**:
+
+Throughout my internship, I was fortunate to have incredibly supportive mentors who guided me every step of the way. We had meetings every Monday and Wednesday, and I kept them updated via email on my progress. They appreciated even subtle techniques in my code and gave me the freedom to learn through trial and error.
+
+As the internship progressed, I began to wonder if I could contribute to other areas of the codebase beyond my assigned project and my mentors shared few issues that I could pick. One of these tasks involved automating a manual aspect of the workflow. From this, an idea to create an API for teuthology came about, and my mentors encouraged me to explore FastAPI for its implementation. I spent the rest of my internship building basic features of teuthology-api and continued work on my internship project. 
+
+Ceph's core team recognized the potential of my internship project and suggested enhancing its functionality for broader use. After my internship ended, I continued work on the internship project and teuthology-api for which I felt a sense of ownership and responsibility. 
+
+I also got the opportunity to give a virtual Ceph Talk where I showcased my internship project to the Ceph team, you can find it on Youtube [here](https://www.youtube.com/watch?v=hPt0WbYtDxA). I ended up changing the implimentation significantly after this talk, which solved the problem even more effciently.
+
+### Grace Hopper Conference's Open Source Day
+
+Application
+GHC - Cloudflare's recruiter, Canonical, Mastercard, NetAPP  
+Open source day
 
 
+---
+
+Thank you for reading my story of navigating open-source programs. I hope future applicants find some helpful tip in here.
+
+You can reach out to me via email at _vallariag+blog@gmail.com_, or:
+- LinkedIn: https://www.linkedin.com/in/vallariag
+- Twitter: https://twitter.com/VallariAg
+
+
+So long, and thanks for all the fish! 🐬
 

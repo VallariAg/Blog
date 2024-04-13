@@ -1,7 +1,7 @@
 ---
 title: "Hitchhiker's Guide to Outreachy and Google Summer of Code"
 date: "2022-12-15T22:12:03.284Z"
-description: "Complete guide for applicants - details about program's eligibility criteria, program schedule, selecting orgs/projects, and a step-by-step walk through the program phases, and proposal template."
+description: "Complete guide for applicants - details about eligibility criteria, program schedules, selecting organizations or projects, proposal template, and a step-by-step walk through the program phases."
 ---
 
 The goal of this blog is to provide the reader with all the information they need for applying to open-source programs "Google Summer of Code" and "Outreachy". I have past experience with these two programs so I can only share about these. There are more open-source programs which you can checkout [here](https://github.com/tapaswenipathak/Open-Source-Programs). 
