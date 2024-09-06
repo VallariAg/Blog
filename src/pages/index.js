@@ -18,7 +18,7 @@ const BlogIndex = ({ data, location }) => {
       <SEO title="All posts" />
       <Bio />
       <hr />
-      <a href="/tech"><h1 style={{color: "#770737"}}>Programming Blog</h1></a>
+      <a href="/tech"><h1>Programming Blog</h1></a>
       <p>Here are the latest posts. Checkout all tech posts <a href="/tech">here</a>.</p>
       {techPosts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
@@ -28,6 +28,7 @@ const BlogIndex = ({ data, location }) => {
               <h3
                 style={{
                   marginBottom: rhythm(1 / 4),
+                  // fontFamily: "Verdana",
                 }}
               >
                 <Link style={{ boxShadow: `none`, color: 'black' }} to={node.fields.slug}>
@@ -47,7 +48,7 @@ const BlogIndex = ({ data, location }) => {
         )
       })}
       <hr />
-      <a href="/personal"><h1 style={{color: "#770737"}}>Personal Blogs</h1></a>
+      <a href="/personal"><h1>Personal Blogs</h1></a>
       <p>Here are the latest posts. Checkout all personal blog posts <a href="/personal">here</a>.</p>
       {personalPosts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
@@ -57,6 +58,7 @@ const BlogIndex = ({ data, location }) => {
               <h3
                 style={{
                   marginBottom: rhythm(1 / 4),
+                  // fontFamily: "Verdana",
                 }}
               >
                 <Link style={{ boxShadow: `none`, color: 'black' }} to={node.fields.slug}>
@@ -75,7 +77,6 @@ const BlogIndex = ({ data, location }) => {
           </article>
         )
       })}
-      <hr />
     </Layout>
   )
 }
