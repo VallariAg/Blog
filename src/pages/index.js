@@ -16,14 +16,13 @@ const BlogIndex = ({ data, location }) => {
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
       <p>
-        Hello, I'm Vallari Agrawal! <br />
+        Hello, I'm <a href="/about">Vallari Agrawal</a>! <br />
 
         I'm currently working at Ceph IBM as a Software Engineer. 
         <br />
-        <a href="/about">More about me!</a>
       </p>
       <hr />
-      <a href="/tech"><h1>Programming Blog</h1></a>
+      <a href="/tech"><h1>Programming</h1></a>
       <p>Here are the latest posts. Checkout all tech posts <a href="/tech">here</a>.</p>
       {techPosts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
@@ -53,7 +52,7 @@ const BlogIndex = ({ data, location }) => {
         )
       })}
       <hr />
-      <a href="/personal"><h1>Personal Blogs</h1></a>
+      <a href="/personal"><h1>Personal</h1></a>
       <p>Here are the latest posts. Checkout all personal blog posts <a href="/personal">here</a>.</p>
       {personalPosts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
