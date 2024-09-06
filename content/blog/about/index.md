@@ -31,9 +31,3 @@ You'll also find me sharing recommendations of videos, podcasts, and interesting
 
 **Photography**: I like clicking pictures and sharing them on [Unsplash](https://unsplash.com/@vallariag).
 
-### Contact me!
-
-You can reach out to me on any of these platforms:
-- Linkedin: [linkedin.com/in/vallariag](www.linkedin.com/in/vallariag)
-- Twitter: [twitter.com/VallariAg](https://twitter.com/VallariAg)
-- Mastadon: [mastodon.social/@vallari](https://mastodon.social/@vallari)

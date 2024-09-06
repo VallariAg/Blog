@@ -1,0 +1,13 @@
+div {
+    font-family: Verdana;
+    /* background: red; */
+    /* color: black; */
+}
+
+:is(h2, h3, h4, h5, h6) {
+    font-family: 'Verdana';    
+}
+
+h1 { 
+    font-family: 'Tahoma'; 
+}

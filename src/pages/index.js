@@ -1,7 +1,6 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 
-import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { rhythm } from "../utils/typography"
@@ -16,7 +15,13 @@ const BlogIndex = ({ data, location }) => {
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
-      <Bio />
+      <p>
+        Hello, I'm Vallari Agrawal! <br />
+
+        I'm currently working at Ceph IBM as a Software Engineer. 
+        <br />
+        <a href="/about">More about me!</a>
+      </p>
       <hr />
       <a href="/tech"><h1>Programming Blog</h1></a>
       <p>Here are the latest posts. Checkout all tech posts <a href="/tech">here</a>.</p>

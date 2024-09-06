@@ -154,9 +154,3 @@ Key Takeaways:
 
 If you have any questions, you're welcome to share them with me. Good luck!
 
----
-
-You can reach out to me via email at _vallariag+blog@gmail.com_, or:
-- LinkedIn: [linkedin.com/in/vallariag](www.linkedin.com/in/vallariag)
-- Twitter: [twitter.com/VallariAg](https://twitter.com/VallariAg)
-

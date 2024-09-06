@@ -56,11 +56,3 @@ I thought that [greenpeace](https://github.com/greenpeace/planet4) sounded like 
 Thank you for reading my story of navigating open-source programs. I hope future applicants find some helpful tip in here.
 
 So long, and thanks for all the fish! 🐬
-
----
-
-You can reach out to me via email at _vallariag+blog@gmail.com_, or:
-- LinkedIn: [linkedin.com/in/vallariag](www.linkedin.com/in/vallariag)
-- Twitter: [twitter.com/VallariAg](https://twitter.com/VallariAg)
-
-

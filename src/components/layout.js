@@ -1,9 +1,10 @@
 import React from "react"
 import { Link } from "gatsby"
 
+import Bio from "./bio"
 import { rhythm, scale } from "../utils/typography"
 import { defineCustomElements as deckDeckGoHighlightElement } from '@deckdeckgo/highlight-code/dist/loader';
-
+import "./layout.css"
 
 const Layout = ({ location, title, children }) => {
   deckDeckGoHighlightElement();
@@ -66,9 +67,10 @@ const Layout = ({ location, title, children }) => {
     >
       <header>{header}</header>
       <main>{children}</main>
-      <hr />
-      <footer>
-        Written by Vallari Agrawal © {new Date().getFullYear()}
+      <footer style={{marginTop: rhythm(2)}}>
+        <hr />
+        <Bio />
+        <div style={{margin: "auto"}}>Written by <a href="/about">Vallari Agrawal</a> © {new Date().getFullYear()}</div>
         {/* , Built with {` `}
         <a href="https://www.gatsbyjs.org">Gatsby</a> */}
       </footer>

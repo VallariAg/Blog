@@ -29,6 +29,10 @@ const Bio = () => {
           }
           social {
             twitter
+            github
+            email
+            linkedin
+            substack
           }
         }
       }
@@ -40,7 +44,7 @@ const Bio = () => {
     <div
       style={{
         display: `flex`,
-        marginBottom: rhythm(2.5),
+        marginTop: rhythm(1),
         color: '#555'
       }}
     >
@@ -58,11 +62,22 @@ const Bio = () => {
         }}
       />
       <p>
-        Written by <strong>{author.name}</strong> {author.summary}
+
+        Contact me at <a href={`${social.email}`}>{social.email}</a>
+        {/* <strong>{author.name}</strong> {author.summary} */}
         {` `}
-        <a href={`https://twitter.com/${social.twitter}`}>
+        {/* <a href={`https://twitter.com/${social.twitter}`}>
           Follow her on Twitter!
-        </a>
+        </a> */}
+        <p>
+          <a href={`${social.twitter}`}>Twitter</a>  
+          {`  |  `}
+          <a href={`${social.github}`}>Github</a>  
+          {`  |  `} 
+          <a href={`${social.linkedin}`}>LinkedIn</a>  
+          {`  |  `}
+          <a href={`${social.substack}`}>Substack</a>  
+        </p>
       </p>
     </div>
   )
