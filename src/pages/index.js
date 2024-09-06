@@ -17,7 +17,9 @@ const BlogIndex = ({ data, location }) => {
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
       <Bio />
-      <h1>Programming Blog</h1>
+      <hr />
+      <a href="/tech"><h1 style={{color: "#770737"}}>Programming Blog</h1></a>
+      <p>Here are the latest posts. Checkout all tech posts <a href="/tech">here</a>.</p>
       {techPosts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
         return (
@@ -44,7 +46,9 @@ const BlogIndex = ({ data, location }) => {
           </article>
         )
       })}
-      <h1>Personal Blogs</h1>
+      <hr />
+      <a href="/personal"><h1 style={{color: "#770737"}}>Personal Blogs</h1></a>
+      <p>Here are the latest posts. Checkout all personal blog posts <a href="/personal">here</a>.</p>
       {personalPosts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
         return (
@@ -71,6 +75,7 @@ const BlogIndex = ({ data, location }) => {
           </article>
         )
       })}
+      <hr />
     </Layout>
   )
 }
@@ -87,7 +92,7 @@ query {
   techPosts: allMarkdownRemark(
     sort: { fields: [frontmatter___date], order: DESC }
     filter: { fields: { slug: { regex: "/^\\/tech-/" } } }
-    limit: 5
+    limit: 3
   ) {
     edges {
       node {
@@ -106,7 +111,7 @@ query {
   personalPosts: allMarkdownRemark(
     sort: { fields: [frontmatter___date], order: DESC }
     filter: { fields: { slug: { regex: "/^\\/personal-/" } } }
-    limit: 5
+    limit: 3
   ) {
     edges {
       node {
