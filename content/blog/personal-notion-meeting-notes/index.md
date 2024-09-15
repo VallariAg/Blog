@@ -9,10 +9,11 @@ In this post, I’ll share a simple Notion template I made for tracking meeting 
 **I’ve been using this template for almost 2 years now** and it’s been very effective for me, so I decided to publish it to share with everyone. I use this template for tracking notes for 1-1 meetings, team meetings, and monthly reviews.
 
 Key requirements:
-1 Calendar view 
-2 Filter by attendee (team/person)
-3 Easy to **find specific past notes**.
-4 Stupid-simple! We want to **focus on writing**, not organisation. 
+
+1. Calendar view 
+2. Filter by attendee (team/person)
+3. Easy to **find specific past notes**.
+4. Stupid-simple! We want to **focus on writing**, not organisation. 
 
 Let me give you a walkthrough and share how I use it.
 
@@ -53,4 +54,3 @@ I published this template on Notion template gallery so it’s easy for others t
 
 **Template link:** [https://www.notion.so/templates/vallari-meeting-notes](https://www.notion.so/templates/vallari-meeting-notes)
 
----
