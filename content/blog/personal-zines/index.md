@@ -59,19 +59,16 @@ I went on my first international trip to Singapore and took a lot of pictures in
 
 Because I wanted to add pictures, I decided to create a digital zine on Procreate. Check it out here: 
 
-![](images/6b21e88e-a8e1-4e7a-9f63-adbe7025ff67.peg) 
+![](./images/sng-zine-cover.png)
 
-Singapore Zine76.4MB ∙ PDF file[Download](https://vallariagrawal.substack.com/api/v1/file/a8ea79a3-bef3-487d-9002-0bfeaa4d8305.pdf)This is the first zine I ever made! It is about my trip to Singapore![Download](https://vallariagrawal.substack.com/api/v1/file/a8ea79a3-bef3-487d-9002-0bfeaa4d8305.pdf)**Another example**: Julia Evans makes amazing programming zines. I purchased one of her zine called “How Containers Works!” - it was educational _and_ fun to read. If you’re interested, you can checkout her website for various free and paid zines about many programming topics: [https://wizardzines.com/](https://wizardzines.com/) 
+Download the full zine here: [Singapore Zine](./SNG-ZINE.pdf) 
+
+**Another example**: Julia Evans makes amazing programming zines. I purchased one of her zine called “How Containers Works!” - it was educational _and_ fun to read. If you’re interested, you can checkout her website for various free and paid zines about many programming topics: [https://wizardzines.com/](https://wizardzines.com/) 
 
 (I swear this is not sponsored, I just talk like that!) 
 
 
 --- 
-Thank you for reading this article! If you liked reading this or felt inspired to make something, I would love to hear your thoughts in comments.  
-
-This post was extremely fun for me to plan and write. I’ve more interesting ideas planned out for this newsletter. See you in September!   
-
- 
-
+Thank you for reading this article! If you liked reading this or felt inspired to make something, I would love to hear your thoughts.
 
 
